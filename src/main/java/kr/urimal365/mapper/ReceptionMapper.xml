@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+
+<mapper namespace="kr.urimal365.dao.ReceptionMapper">
+	<insert id="insertReception" parameterType="Reception">
+		INSERT INTO NARO_RECEPTION SET gbn=#{gbn}, receipt_gbn=#{receiptGbn}, name=#{name}, email=#{email}, post=#{post}, address=#{address}, check1=#{check1}, check2=#{check2}
+			, write_ip=#{writeIp}, write_date=now();
+	</insert>
+</mapper>

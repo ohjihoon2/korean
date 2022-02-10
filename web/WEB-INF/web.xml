@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+    <display-name>fz_urimal</display-name>
+
+    <filter>
+        <filter-name>sessionFilter</filter-name>
+        <filter-class>kr.urimal365.util.SessionFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>sessionFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
+
+    <!-- MyBatis initializer 등록 -->
+    <servlet>
+        <servlet-name>MyBatisInitializer</servlet-name>
+        <servlet-class>kr.urimal365.config.MyBatisConfig</servlet-class>
+
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Secured</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <!-- <transport-guarantee>CONFIDENTIAL</transport-guarantee>    -->
+        </user-data-constraint>
+    </security-constraint>
+
+</web-app>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+
+<mapper namespace="kr.urimal365.dao.NewsCategoryMapper">
+	
+	<select id="getHeadCategoryList" resultType="NewsCategory">
+		SELECT idx, name FROM NARO_NEWS_CATEGORY WHERE idx in (1,2,3,4) AND del_yn='N';
+	</select>
+	<select id="getDepthCategoryList" parameterType="int" resultType="NewsCategory">
+		SELECT idx, name, link FROM NARO_NEWS_CATEGORY WHERE lvl=2 AND parent_idx=#{parentIdx} AND del_yn='N' AND is_open='Y' ORDER BY sort_order;
+	</select>
+	
+	<select id="newsCategoryLvl2" resultType="NewsCategory">
+		SELECT idx, name FROM NARO_NEWS_CATEGORY WHERE del_yn='N' AND ifnull(link,'')='' AND lvl=2 ORDER BY name;
+	</select>
+	<select id="getCategory" parameterType="int" resultType="NewsCategory">
+		SELECT (CASE WHEN lvl=1 THEN idx ELSE parent_idx END) as idx, name FROM NARO_NEWS_CATEGORY WHERE idx=( SELECT category_idx FROM NARO_NEWS WHERE idx=#{newsIdx} );
+	</select>
+	
+	<select id="getCategoryTitle" parameterType="int" resultType="NewsCategory">
+		SELECT (CASE WHEN lvl=1 THEN idx ELSE parent_idx END) as cate_idx, name FROM NARO_NEWS_CATEGORY WHERE idx=#{categoryIdx};
+	</select>
+</mapper>

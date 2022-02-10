@@ -1,0 +1,96 @@
+<%@page import="kr.urimal365.util.UtilFunction"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="kr.urimal365.dao.NewsCategoryDAO"%>
+<%@page import="kr.urimal365.dto.NewsCategory"%>
+<%@page import="kr.urimal365.dao.ContentsDAO"%>
+<%@page import="kr.urimal365.dto.Contents"%>
+<%@page import="kr.urimal365.dao.NewsViewDAO"%>
+<%@page import="kr.urimal365.dto.NewsView"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<div class="contentWrap">
+	<div id="pc_mobile_main_con" style="display:none">
+		<!-- pc -->
+		<div class="kr-contents pc">
+			<div class="kr-top-main">
+				<div class="kr-full">
+					<div class="main_top"><a href="javascript:void(0);"><img src="" alt="" id="pc_top"></a></div>
+				</div>
+				<div class="kr-two">
+					<div class="left">
+						<div class="main-slide">
+							<div class="slide_1_01"><a href="javascript:void(0);"><img src="" alt="" id="slide_1_01"></a></div>
+							<!-- <div class="slide_1_02"><a href="javascript:void(0);"><img src="" alt="" id="slide_1_02"></a></div> -->
+						</div>
+					</div>
+					<div class="right">
+						<div class="main-slide">
+							<div class="slide_2_01"><a href="javascript:void(0);"><img src="" alt="" id="slide_2_01"></a></div>
+							<!-- <div class="slide_2_02"><a href="javascript:void(0);"><img src="" alt="" id="slide_2_02"></a></div> -->
+						</div>
+						<div class="main-slide">
+							<div class="slide_3_01"><a href="javascript:void(0);"><img src="" alt="" id="slide_3_01"></a></div>
+							<!-- <div class="slide_3_02"><a href="javascript:void(0);"><img src="" alt="" id="slide_3_02"></a></div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="kr-down-main">
+				<div class="kr-two-main">
+					<ul>
+						<li class="li_main_1_01"><a href="javascript:void(0);"><img src="" alt="" id="pc_main_1_01"></a></li>
+						<li class="li_main_1_02"><a href="javascript:void(0);"><img src="" alt="" id="pc_main_1_02"></a></li>
+						<li class="li_main_1_03"><a href="javascript:void(0);"><img src="" alt="" id="pc_main_1_03"></a></li>
+						<li class="li_main_1_04"><a href="javascript:void(0);"><img src="" alt="" id="pc_main_1_04"></a></li>
+						<li class="li_main_1_05"><a href="javascript:void(0);"><img src="" alt="" id="pc_main_1_05"></a></li>
+						<li class="li_main_1_06"><a href="javascript:void(0);"><img src="" alt="" id="pc_main_1_06"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- 모바일 -->
+		<div class="kr-contents mobile">
+			<div class="kr-top-main">
+				<div class="kr-full">
+					<div class="main_top"><a href="javascript:void(0);"><img src="" alt="" id="mo_top"></a></div>
+				</div>
+				<div class="kr-two">
+					<div class="left">
+						<div class="main-slide">
+							<div class="slide_1_01"><a href="javascript:void(0);"><img src="" alt="" id="mo_slide_1_01"></a></div>
+							<!-- <div class="slide_1_02"><a href="javascript:void(0);"><img src="" alt="" id="mo_slide_1_02"></a></div> -->
+						</div>
+					</div>
+					<div class="right">
+						<div class="main-slide">
+							<div class="slide_2_01"><a href="javascript:void(0);"><img src="" alt="" id="mo_slide_2_01"></a></div>
+							<!-- <div class="slide_2_02"><a href="javascript:void(0);"><img src="" alt="" id="mo_slide_2_02"></a></div> -->
+						</div>
+						<div class="main-slide">
+							<div class="slide_3_01"><a href="javascript:void(0);"><img src="" alt="" id="mo_slide_3_01"></a></div>
+							<!-- <div class="slide_3_02"><a href="javascript:void(0);"><img src="" alt="" id="mo_slide_3_02"></a></div> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="kr-down-main">
+				<div class="kr-two-main">
+					<ul>
+						<li class="li_main_1_01"><a href="javascript:void(0);"><img src="" alt="" id="mo_main_1_01"></a></li>
+						<li class="li_main_1_02"><a href="javascript:void(0);"><img src="" alt="" id="mo_main_1_02"></a></li>
+						<li class="li_main_1_03"><a href="javascript:void(0);"><img src="" alt="" id="mo_main_1_03"></a></li>
+						<li class="li_main_1_04"><a href="javascript:void(0);"><img src="" alt="" id="mo_main_1_04"></a></li>
+						<li class="li_main_1_05"><a href="javascript:void(0);"><img src="" alt="" id="mo_main_1_05"></a></li>
+						<li class="li_Main_1_06"><a href="javascript:void(0);"><img src="" alt="" id="mo_main_1_06"></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="kr-contents kr-foo-main">
+			<div class="kr-full">
+				<div class="pc"><a href="javascript:void(0);"><img src="" alt="" id="pc_main_1_07"></a></div>
+				<div class="mobile"><a href="javascript:void(0);"><img src="" alt="" id="mo_main_1_07"></a></div>
+			</div>
+		</div> -->
+	</div>
+</div>

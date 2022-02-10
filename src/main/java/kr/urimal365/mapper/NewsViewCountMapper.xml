@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+
+<mapper namespace="kr.urimal365.dao.NewsViewCountMapper">
+	<resultMap type="kr.urimal365.dto.Count" id="cntMap">
+		<result property="cnt" column="cnt" />
+	</resultMap>
+
+	<select id="getCount" resultMap="cntMap" parameterType="HashMap">
+		SELECT count(1) AS cnt FROM NARO_NEWS_VIEW_COUNT WHERE dt=#{today} AND news_idx=#{idx};
+	</select>
+	<update id="updateCount" parameterType="HashMap">
+		UPDATE NARO_NEWS_VIEW_COUNT SET view_count=view_count+1, update_date=now() WHERE dt=#{today} AND news_idx=#{idx};
+	</update>
+	<insert id="insertCount" parameterType="HashMap">
+		INSERT INTO NARO_NEWS_VIEW_COUNT SET dt=#{today}, news_idx=#{idx}, view_count=1, write_date=now(), update_date=now();
+	</insert>
+</mapper>

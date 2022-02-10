@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+
+<mapper namespace="kr.urimal365.dao.QuizViewMapper">
+	<resultMap type="QuizQuestion" id="questionMap">
+		<id property="idx" column="idx"/>
+		<result property="quizIdx" column="quiz_idx"/>
+		<result property="num" column="num"/>
+		<result property="title" column="title"/>
+		<result property="subtitle" column="subtitle"/>
+		<result property="rightAnswer" column="right_answer"/>
+		<result property="contents" column="contents"/>
+		<result property="delYn" column="del_yn"/>
+		<result property="writeId" column="write_id"/>
+		<result property="writeDate" column="write_date"/>
+		<result property="updateId" column="update_id"/>
+		<result property="updateDate" column="update_date"/>
+	</resultMap>
+
+	<select id="getQuiz"  resultType="QuizView">
+		SELECT * FROM VW_NARO_QUIZ a ORDER BY a.idx DESC LIMIT 1;
+	</select>
+	<select id="previewQuiz"  resultType="QuizView" parameterType="int">
+		SELECT * FROM NARO_QUIZ a WHERE a.del_yn='N' AND idx=#{idx};
+	</select>
+	<select id="applyCount" resultType="Count">
+		SELECT count(1) AS cnt FROM NARO_QUIZ_APPLY WHERE del_yn='N' AND end_yn='Y' AND quiz_idx NOT IN (2);
+	</select>
+	<select id="quizQuestionList" resultMap="questionMap" parameterType="int">
+		SELECT * FROM NARO_QUIZ_QUESTION WHERE del_yn='N' AND quiz_idx=#{idx};
+	</select>
+	<insert id="startQuiz" parameterType="HashMap">
+		INSERT INTO NARO_QUIZ_APPLY SET quiz_idx=#{idx}, del_yn='N', write_date=now(), write_id=#{ip};
+	</insert>
+	<update id="endQuiz" parameterType="HashMap">
+		UPDATE NARO_QUIZ_APPLY SET score=#{score}, grade=#{grade}, end_yn='Y' WHERE idx=#{idx};
+	</update>
+	<update id="quizApply" parameterType="HashMap">
+		UPDATE NARO_QUIZ_APPLY SET name=#{name}, phone=#{phone}, email=#{email}, agree_yn=#{agreeYn}, application_yn='Y' WHERE idx=#{idx};
+	</update>
+	<select id="getIdx" resultType="int">
+		SELECT LAST_INSERT_ID() AS idx;
+	</select>
+</mapper>

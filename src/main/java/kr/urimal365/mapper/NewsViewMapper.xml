@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+
+
+<mapper namespace="kr.urimal365.dao.NewsViewMapper">
+	<resultMap id="news" type="newsView">
+		<id property="idx" column="idx"/>
+		<result	property="categoryIdx" column="category_idx"/>
+		<result	property="title" column="title"/>
+		<result	property="subTitle" column="subtitle"/>
+		<result	property="except" column="except"/>
+		<result	property="contents" column="contents"/>
+		<result	property="thumbnailFile" column="thumbnail_file"/>
+		<result	property="bannerYn" column="banner_yn"/>
+		<result	property="bannerFile" column="banner_file"/>
+		<result	property="bannerLink" column="banner_link"/>
+		<result	property="readCount" column="read_count"/>
+		<result	property="openYn" column="open_yn"/>
+		<result	property="openStartDatetime" column="open_start_datetime"/>
+		<result	property="openEndDatetime" column="open_end_datetime"/>
+		<result	property="title2" column="title2"/>
+		<result	property="title3" column="title3"/>
+		<result	property="delYn" column="del_yn"/>
+		<result	property="writeId" column="write_id"/>
+		<result	property="writeDate" column="write_date"/>
+		<result	property="updateId" column="update_id"/>
+		<result	property="updateDate" column="update_date"/>
+		<result	property="oldIdx" column="old_idx"/>
+		<result	property="categoryName" column="category_name"/>
+		<result	property="cate1" column="cate1"/>
+		<result	property="cateLvl" column="cate_lvl"/>
+		<result	property="defaultThumbnailFile" column="default_thumbnail_file"/>
+		<result	property="defaultBannerFile" column="default_banner_file"/>
+		<result	property="publishDate" column="publish_date"/>
+		<result	property="contentsStatus" column="contents_status"/>
+		<result	property="modifyId" column="modify_id"/>
+	</resultMap>
+	
+	<resultMap type="kr.urimal365.dto.Rownum" id="rownumMap">
+		<result property="rownum" column="rownum"/>
+	</resultMap>
+	
+	<select id="bestNewsList" resultMap="news">
+		SELECT a.idx, a.title, a.default_thumbnail_file, a.read_count, a.category_name FROM VW_NARO_NEWS a WHERE LEFT(a.publish_date,10) >= 
+		DATE_FORMAT( date_add(now(), interval -1 month), '%Y-%m-%d' )  ORDER BY a.read_count DESC, a.publish_date DESC, a.idx DESC LIMIT 9;
+	</select>
+	
+	<select id="recentNewsList" resultMap="news">
+		SELECT a.idx, a.title, a.default_thumbnail_file, a.read_count, a.category_name,a.subtitle, ( SELECT name FROM NARO_NEWS_CATEGORY x WHERE x.idx=a.cate1 ) AS cate1_name			
+					FROM VW_NARO_NEWS a WHERE a.cate1=#{cate1}
+					ORDER BY a.idx DESC LIMIT 6;
+	</select>
+	
+	<select id="recentBestNewsList" resultMap="news">
+	SELECT a.idx, a.title, a.default_thumbnail_file, a.read_count, a.category_name, ( SELECT name FROM NARO_NEWS_CATEGORY x WHERE x.idx=a.cate1 ) AS cate1_name 		
+					 FROM VW_NARO_NEWS a WHERE a.cate1=#{cate1}
+					 ORDER BY a.read_count DESC, a.idx DESC LIMIT 6;
+	</select>
+	
+	<select id="mainBannerList" resultMap="news">
+	SELECT a.idx, a.title, a.banner_file, a.category_name FROM VW_NARO_NEWS a WHERE banner_yn='Y' ORDER BY cate1;
+	</select>
+	
+	<select id="postList" resultMap="news" parameterType="java.util.HashMap">
+	SELECT a.idx, a.title, a.thumbnail_file, a.read_count, a.category_name, a.default_thumbnail_file, REPLACE(LEFT(a.publish_date,10),'-','.') AS write_date FROM VW_NARO_NEWS a WHERE 1=1
+	<if test="category>0">
+		AND ( a.category_idx=#{category} OR a.cate1=#{cate1} )
+	</if>
+	<if test="searchTxt!=null">
+		AND a.title LIKE CONCAT('%',#{searchTxt},'%')
+	</if>
+	<if test="yyyy!=null and !yyyy.equals('')">
+		AND LEFT(a.publish_date,4)=${yyyy}
+	</if>
+	<if test="mm!=null and !mm.equals('')">
+		AND MID(a.publish_date,6,2)=${mm}
+	</if>
+	<choose>
+		<when test="listType.equals('popular')">
+			ORDER BY a.read_count DESC, a.idx DESC
+		</when>
+		<otherwise>
+			ORDER BY a.publish_date DESC, a.idx DESC LIMIT #{limitOffset}, #{pageSize};
+		</otherwise>
+	</choose>
+	</select>
+	
+	<select id="getNews" resultMap="news" parameterType="int">
+		SELECT a.*, a.category_name AS cate_name, a.cate1 AS cate1_idx, a.default_banner_file FROM VW_NARO_NEWS a WHERE a.del_yn='N' AND a.idx=#{idx};
+	</select>
+	
+	<select id="getAdminNews" resultMap="news" parameterType="int">
+		SELECT a.*, b.name AS cate_name, b.parent_idx AS cate1_idx, CASE WHEN IfNull(a.banner_file,'') = '' THEN b.default_banner_file ELSE a.banner_file 
+			END AS default_banner_file FROM NARO_NEWS a INNER JOIN NARO_NEWS_CATEGORY b ON a.category_idx=b.idx WHERE a.del_yn='N' AND a.idx=#{idx};
+	</select>
+	
+	<select id="getRowNum" resultMap="rownumMap" parameterType="java.util.HashMap">
+		SELECT rownum FROM ( SELECT @ROWNUM:=@ROWNUM+1 AS rownum, a.idx FROM VW_NARO_NEWS a 
+			INNER JOIN ( SELECT @ROWNUM:=0 ) AS t2 WHERE a.category_idx=#{categoryIdx} ORDER BY a.publish_date DESC, a.idx DESC ) src WHERE src.idx=#{idx};
+	</select>
+	
+	<select id="getIdx" resultMap="news" parameterType="java.util.HashMap">
+		SELECT idx FROM ( SELECT @ROWNUM:=@ROWNUM+1 AS rownum, a.idx FROM VW_NARO_NEWS a INNER JOIN ( SELECT @ROWNUM:=0 ) 
+		AS t2 WHERE a.category_idx=#{categoryIdx} ORDER BY a.publish_date DESC, a.idx DESC ) src WHERE src.rownum=#{rownum};
+	</select>
+	
+	<select id="getCateIdx" resultMap="news" parameterType="int">
+		SELECT max(publish_date) as news_idx, category_idx from VW_NARO_NEWS a INNER JOIN NARO_NEWS_CATEGORY x ON a.category_idx=x.idx AND x.del_yn='N' 
+			AND x.is_open='Y' WHERE cate1=#{cate1} GROUP BY category_idx ORDER BY news_idx DESC LIMIT 6;
+	</select>
+	
+	<select id="getCateNews" resultMap="news" parameterType="int">
+		 SELECT a.idx, a.title, a.default_thumbnail_file, a.read_count, REPLACE(LEFT(a.publish_date,10),'-','.') AS str_write_date, a.category_name FROM VW_NARO_NEWS a
+							WHERE a.category_idx=#{categoryIdx}
+							ORDER BY a.publish_date DESC, a.idx DESC LIMIT 1;
+	</select>
+	
+		<select id="getXmlList" resultMap="news" parameterType="java.util.HashMap">
+		SELECT * FROM VW_NARO_NEWS WHERE WRITE_DATE BETWEEN #{startDate} AND #{endDate} ORDER BY WRITE_DATE;
+	</select>
+</mapper>

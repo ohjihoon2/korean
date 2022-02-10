@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd"> 
+
+<mapper namespace="kr.urimal365.dao.EventMapper">
+	<resultMap type="Event" id="eventMap">
+		<id property="idx" column="idx"/>
+		<result property="eventGroupIdx" column="event_group_idx"/>
+		<result property="userName" column="user_name"/>
+		<result property="userHp" column="user_hp"/>
+		<result property="userEmail" column="user_email"/>
+		<result property="agreeYn" column="agree_yn"/>
+		<result property="contents" column="contents"/>
+		<result property="writeDate" column="write_date"/>
+		<result property="imgDir" column="img_dir"/>
+	</resultMap>
+
+	<insert id="insertEvent" parameterType="Event">
+		insert into NARO_EVENT values(null,#{eventGroupIdx},#{userName}
+			,#{userHp},#{userEmail},#{agreeYn},#{contents},now(),#{imgDir});
+	</insert>
+	<select id="recodeCount" parameterType="int" resultType="Count">
+		SELECT count(1) AS cnt FROM NARO_EVENT a WHERE a.event_group_idx=#{idx};
+	</select>
+</mapper>

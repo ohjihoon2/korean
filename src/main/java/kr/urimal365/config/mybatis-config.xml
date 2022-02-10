@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE configuration  
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-config.dtd">  
+  
+<configuration>  
+   
+  <typeAliases>  
+  <typeAlias alias="NewsCategory" type="kr.urimal365.dto.NewsCategory"/> 
+  <typeAlias alias="News" type="kr.urimal365.dto.News"/> 
+  <typeAlias alias="NewsView" type="kr.urimal365.dto.NewsView"/> 
+  <typeAlias alias="Contents" type="kr.urimal365.dto.Contents"/> 
+  <typeAlias alias="Reception" type="kr.urimal365.dto.Reception"/> 
+  <typeAlias alias="QuizView" type="kr.urimal365.dto.QuizView"/> 
+  <typeAlias alias="QuizQuestion" type="kr.urimal365.dto.QuizQuestion"/> 
+  <typeAlias alias="QuizApply" type="kr.urimal365.dto.QuizApply"/> 
+  <typeAlias alias="Count" type="kr.urimal365.dto.Count"/> 
+  <typeAlias alias="Event" type="kr.urimal365.dto.Event"/> 
+  <typeAlias alias="CssDB" type="kr.urimal365.dto.CssDB"/>
+  <typeAlias alias="Visit" type="kr.urimal365.dto.Visit"/>
+ </typeAliases>
+   
+ <environments default="development">  
+  <environment id="development">  
+   <transactionManager type="JDBC"/>  
+   <dataSource type="POOLED">  
+    <property name="driver" value="com.mysql.jdbc.Driver"/>  
+    <property name="url" value="jdbc:mysql://192.168.0.129:3306/korean?userUnicode=true&amp;characterEncoding=UTF8&amp;"/>
+    <property name="username" value="root"/>  
+    <property name="password" value="1234"/> 
+    <!-- Connection 해제 방지 --> 
+    <property name="poolPingQuery" value="select 1"/>
+    <property name="poolPingEnabled" value="true"/>
+    <property name="poolPingConnectionsNotUsedFor" value="7200000"/>
+   </dataSource>  
+  </environment>  
+ </environments>  
+  
+  <mappers>
+  	<mapper resource="kr/urimal365/mapper/NewsCategoryMapper.xml"/>
+  	<mapper resource="kr/urimal365/mapper/NewsMapper.xml"/>
+  	<mapper resource="kr/urimal365/mapper/NewsViewMapper.xml"/>
+  	<mapper resource="kr/urimal365/mapper/NewsViewCountMapper.xml"/>
+  	<mapper resource="kr/urimal365/mapper/ContentsMapper.xml"/>
+  	<mapper resource="kr/urimal365/mapper/ReceptionMapper.xml"/>
+  	<mapper resource="kr/urimal365/mapper/QuizViewMapper.xml"/>
+  	<mapper resource="kr/urimal365/mapper/EventMapper.xml"/>
+	<mapper resource="kr/urimal365/mapper/CssMapper.xml"/>
+	<mapper resource="kr/urimal365/mapper/VisitMapper.xml"/>
+  </mappers>
+</configuration>  

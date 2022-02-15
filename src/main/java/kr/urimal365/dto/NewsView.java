@@ -274,4 +274,40 @@ public class NewsView {
     public void setModifyId(int modifyId) {
         this.modifyId = modifyId;
     }
+
+    @Override
+    public String toString() {
+        return "NewsView{" +
+                "idx=" + idx +
+                ", categoryIdx=" + categoryIdx +
+                ", title='" + title + '\'' +
+                ", subTitle='" + subTitle + '\'' +
+                ", except='" + except + '\'' +
+                ", contents='" + contents + '\'' +
+                ", thumbnailFile='" + thumbnailFile + '\'' +
+                ", bannerYn='" + bannerYn + '\'' +
+                ", bannerFile='" + bannerFile + '\'' +
+                ", bannerLink='" + bannerLink + '\'' +
+                ", readCount=" + readCount +
+                ", openYn='" + openYn + '\'' +
+                ", openStartDatetime='" + openStartDatetime + '\'' +
+                ", openEndDatetime='" + openEndDatetime + '\'' +
+                ", title2='" + title2 + '\'' +
+                ", title3='" + title3 + '\'' +
+                ", delYn='" + delYn + '\'' +
+                ", writeId='" + writeId + '\'' +
+                ", writeDate='" + writeDate + '\'' +
+                ", updateId='" + updateId + '\'' +
+                ", updateDate='" + updateDate + '\'' +
+                ", oldIdx=" + oldIdx +
+                ", categoryName='" + categoryName + '\'' +
+                ", cate1=" + cate1 +
+                ", cateLvl=" + cateLvl +
+                ", defaultThumbnailFile='" + defaultThumbnailFile + '\'' +
+                ", defaultBannerFile='" + defaultBannerFile + '\'' +
+                ", publishDate='" + publishDate + '\'' +
+                ", contentsStatus='" + contentsStatus + '\'' +
+                ", modifyId=" + modifyId +
+                '}';
+    }
 }

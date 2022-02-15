@@ -11,9 +11,10 @@
 %>	
 <!DOCTYPE html>
 <html xml:lang="ko" lang="ko">
+<%-- 헤더 --%>
 <jsp:include page="bitsol_header.jsp"></jsp:include>
-<body>
+<%-- 본문 --%>
 <jsp:include page="<%=centerFile %>"></jsp:include>
-<jsp:include page="new_footer.jsp"></jsp:include>
-</body>
+<%-- 푸터 --%>
+<jsp:include page="bitsol_footer.jsp"></jsp:include>
 </html>

@@ -84,10 +84,11 @@
 	param.put("pageSize", pageSize);
 	param.put("limitOffset", limitOffset);
 	
-	List<NewsView> postList = NewsViewDAO.getDAO().postList(param); 
+	List<NewsView> postList = NewsViewDAO.getDAO().postList(param);
+
 	
 %>
-<% for (NewsView post : postList) { 
+<% for (NewsView post : postList) {
 	String thumnail = post.getDefaultThumbnailFile();
 	if (thumnail == null || thumnail.equals("")) {
 		thumnail = "/images/common/thumnail_category_old.jpg";
@@ -95,7 +96,7 @@
 %>
 <li>
 				<div class="">
-					<p class="img"><!-- 265*149(6.4*3.6) �̹��� ������ ���� -->
+					<p class="img">
 						<img src="<%=thumnail %>" alt="" class="bg"/>
 					</p>
 					<p class="cont">
@@ -107,7 +108,12 @@
 				</div>
 </li>
 <% } %>
-<%
-if (postList.size() < pageSize) {  %>
+<% if (limitOffset == 0 && postList.size() == 0) {  %>
+<li class="nonData">
+	게시물이 없습니다.
+</li>
+<% } %>
+
+<% if (postList.size() < pageSize) {  %>
 	<script>$("#btn_post_more").hide();</script>
 <% } %>

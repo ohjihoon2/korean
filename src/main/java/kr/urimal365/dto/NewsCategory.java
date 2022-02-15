@@ -130,4 +130,24 @@ public class NewsCategory {
     public void setIsOpen(String isOpen) {
         this.isOpen = isOpen;
     }
+
+    @Override
+    public String toString() {
+        return "NewsCategory{" +
+                "idx=" + idx +
+                ", parentIdx=" + parentIdx +
+                ", lvl=" + lvl +
+                ", name='" + name + '\'' +
+                ", link='" + link + '\'' +
+                ", defaultThumbnailFile='" + defaultThumbnailFile + '\'' +
+                ", defaultBannerFile='" + defaultBannerFile + '\'' +
+                ", sortOrder='" + sortOrder + '\'' +
+                ", delYn='" + delYn + '\'' +
+                ", writeId='" + writeId + '\'' +
+                ", writeDate='" + writeDate + '\'' +
+                ", updateId='" + updateId + '\'' +
+                ", updateDate='" + updateDate + '\'' +
+                ", isOpen='" + isOpen + '\'' +
+                '}';
+    }
 }

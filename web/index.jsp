@@ -1,7 +1,17 @@
+<%@ page import="kr.urimal365.dao.VisitCountDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 <%
-	System.out.println("index 페이지 입니다~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+	if(session.isNew()){
+		VisitCountDAO dao = VisitCountDAO.getInstance();
+		try {
+			// 전체 방문자 수 증가
+			dao.setTotalCount(request);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	request.setCharacterEncoding("UTF-8");
 
 	String control = request.getParameter("control");

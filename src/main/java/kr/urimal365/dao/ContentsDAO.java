@@ -4,6 +4,10 @@ import kr.urimal365.config.MyBatisConfig;
 import kr.urimal365.dto.Contents;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class ContentsDAO extends MyBatisConfig {
     private static ContentsDAO _dao;
 
@@ -18,16 +22,19 @@ public class ContentsDAO extends MyBatisConfig {
         return _dao;
     }
 
-    public Contents getBanner(String gbn) {
+    public List<Contents> getBanner(String gbn) {
         SqlSession sqlSession = getSqlSessionFactory().openSession(true);
 
-        Contents var4;
+        List<Contents> var4;
+
+        Map<String, Object> paraMap = new HashMap<>();
+
+        paraMap.put("gbn", gbn);
         try {
-            var4 = ((ContentsMapper)sqlSession.getMapper(ContentsMapper.class)).getBanner(gbn);
+            var4 = ((ContentsMapper)sqlSession.getMapper(ContentsMapper.class)).getBanner(paraMap);
         } finally {
             sqlSession.close();
         }
-
         return var4;
     }
 

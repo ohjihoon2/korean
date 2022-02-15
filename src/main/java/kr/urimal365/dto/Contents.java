@@ -1,6 +1,22 @@
 package kr.urimal365.dto;
 
 public class Contents {
+    @Override
+    public String toString() {
+        return "Contents{" +
+                "idx=" + idx +
+                ", gbn='" + gbn + '\'' +
+                ", contents='" + contents + '\'' +
+                ", openYn='" + openYn + '\'' +
+                ", openStartDatetime='" + openStartDatetime + '\'' +
+                ", openEndDateTime='" + openEndDateTime + '\'' +
+                ", writeId='" + writeId + '\'' +
+                ", writeDate='" + writeDate + '\'' +
+                ", updateId='" + updateId + '\'' +
+                ", updateDate='" + updateDate + '\'' +
+                '}';
+    }
+
     private int idx;
     private String gbn;
     private String contents;

@@ -17,6 +17,16 @@
 		<link rel="shortcut icon" href="/images/common/KR_icon.png" />
 		<link rel="apple-touch-icon" href="/images/common/KR_icon.png" />
 		<%
+			List<Contents> contList = ContentsDAO.getDAO().getBanner("3-2");
+			for (int i =0; i < contList.size();i++) {
+				if(i == 0){
+					System.out.println("list 시작!!! ");
+				}
+				System.out.println("i = " + i);
+				System.out.println(contList.get(i).toString());
+			}
+
+
 			List<CssDB> allCssList = CssDAO.getDAO().getCssList("8-1");
 			for (CssDB css:allCssList) {
 		%>

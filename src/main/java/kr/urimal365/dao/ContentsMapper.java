@@ -2,8 +2,12 @@ package kr.urimal365.dao;
 
 import kr.urimal365.dto.Contents;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ContentsMapper {
-    Contents getBanner(String var1);
+    List<Contents> getBanner(Map<String, Object> paraMap);
 
     Contents getFooter(String var1);
+
 }

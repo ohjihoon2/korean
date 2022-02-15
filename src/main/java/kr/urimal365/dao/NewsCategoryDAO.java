@@ -1,10 +1,13 @@
 package kr.urimal365.dao;
 
 import kr.urimal365.config.MyBatisConfig;
+import kr.urimal365.dto.Contents;
 import kr.urimal365.dto.NewsCategory;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NewsCategoryDAO extends MyBatisConfig {
     private static NewsCategoryDAO _dao;
@@ -84,4 +87,40 @@ public class NewsCategoryDAO extends MyBatisConfig {
 
         return var4;
     }
+
+    // 새로운 글 모음
+    public List<NewsCategory> getCategoryNewList() {
+        SqlSession sqlSession = getSqlSessionFactory().openSession(true);
+
+        List<NewsCategory> var4;
+
+        try {
+            var4 = ((NewsCategoryMapper)sqlSession.getMapper(NewsCategoryMapper.class)).getCategoryNewList();
+        } finally {
+            sqlSession.close();
+        }
+        return var4;
+    }
+
+    // 메인페이지 contentList
+    public List<NewsCategory> getContentList(String gbn, int limit) {
+
+        SqlSession sqlSession = getSqlSessionFactory().openSession(true);
+
+        List<NewsCategory> var4;
+
+        Map<String, Object> paraMap = new HashMap<>();
+
+        paraMap.put("gbn", gbn);
+
+        try {
+            var4 = ((NewsCategoryMapper)sqlSession.getMapper(NewsCategoryMapper.class)).getContentList(paraMap);
+        } finally {
+            sqlSession.close();
+        }
+        return var4;
+    }
+
+
+
 }

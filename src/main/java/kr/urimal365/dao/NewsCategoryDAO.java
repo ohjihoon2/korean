@@ -88,39 +88,4 @@ public class NewsCategoryDAO extends MyBatisConfig {
         return var4;
     }
 
-    // 새로운 글 모음
-    public List<NewsCategory> getCategoryNewList() {
-        SqlSession sqlSession = getSqlSessionFactory().openSession(true);
-
-        List<NewsCategory> var4;
-
-        try {
-            var4 = ((NewsCategoryMapper)sqlSession.getMapper(NewsCategoryMapper.class)).getCategoryNewList();
-        } finally {
-            sqlSession.close();
-        }
-        return var4;
-    }
-
-    // 메인페이지 contentList
-    public List<NewsCategory> getContentList(String gbn, int limit) {
-
-        SqlSession sqlSession = getSqlSessionFactory().openSession(true);
-
-        List<NewsCategory> var4;
-
-        Map<String, Object> paraMap = new HashMap<>();
-
-        paraMap.put("gbn", gbn);
-
-        try {
-            var4 = ((NewsCategoryMapper)sqlSession.getMapper(NewsCategoryMapper.class)).getContentList(paraMap);
-        } finally {
-            sqlSession.close();
-        }
-        return var4;
-    }
-
-
-
 }

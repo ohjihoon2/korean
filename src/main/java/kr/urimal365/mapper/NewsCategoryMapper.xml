@@ -21,31 +21,4 @@
 		SELECT (CASE WHEN lvl=1 THEN idx ELSE parent_idx END) as cate_idx, name FROM NARO_NEWS_CATEGORY WHERE idx=#{categoryIdx};
 	</select>
 
-	<select id="getCategoryNewList" resultType="NewsCategory">
-		SELECT a.*, b.idx, b.parent_idx
-		FROM naro_news a
-				 inner join (
-			select *
-			from naro_news_category
-			where parent_idx in (
-				select idx
-				from naro_news_category
-				where is_open ='Y'
-				  and del_yn ='N'
-				  and lvl = 1
-			)
-			  and del_yn ='N'
-			  and is_open = 'Y'
-		) b on a.category_idx = b.idx
-		where a.open_yn ='Y'
-		  and a.del_yn = 'N'
-		order by a.write_date desc
-		limit 8
-	</select>
-
-	<select id="getContentList" resultType="NewsCategory" parameterType="Map">
-
-	</select>
-
-
 </mapper>

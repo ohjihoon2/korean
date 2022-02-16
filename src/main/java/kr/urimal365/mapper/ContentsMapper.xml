@@ -9,9 +9,59 @@
 		   AND date_format(NOW(), '%Y-%m-%d %H:%i') BETWEEN  open_start_datetime  AND open_end_datetime
 		   AND gbn=#{gbn} ORDER BY idx DESC
 	</select>
+
+	<select id="getCategoryNewList" resultType="HashMap">
+		SELECT a.*
+		  FROM naro_news a
+		 INNER JOIN (
+						SELECT *
+						FROM naro_news_category
+						WHERE parent_idx IN (
+												SELECT idx
+												FROM naro_news_category
+												WHERE is_open ='Y'
+												  AND del_yn ='N'
+												  AND lvl = 1
+											)
+						  AND del_yn ='N'
+						  AND is_open = 'Y'
+					) b ON a.category_idx = b.idx
+		 WHERE a.open_yn ='Y'
+		   AND a.del_yn = 'N'
+		 ORDER BY a.write_date DESC
+		 LIMIT 8
+	</select>
+
+	<select id="getCategoryInfo" resultType="HashMap" parameterType="int">
+		SELECT name, is_open
+		  FROM naro_news_category
+		 WHERE idx = #{idx}
+	</select>
+
+	<select id="getContentList" resultType="HashMap" parameterType="Map">
+		SELECT a.*
+	   	  FROM naro_news a
+		 INNER JOIN (
+						SELECT *
+						FROM naro_news_category
+						WHERE parent_idx = #{idx}
+						  AND del_yn ='N'
+						  AND is_open = 'Y'
+						  AND lvl = 2
+					) b ON a.category_idx = b.idx
+		 WHERE a.open_yn ='Y'
+		   AND a.del_yn = 'N'
+		 ORDER BY a.write_date DESC
+		 LIMIT #{limit}
+	</select>
+
 	<select id="getFooter" resultType="Contents" parameterType="String">
-		SELECT contents, open_yn FROM NARO_CONTENTS WHERE del_yn='N'  
-			AND gbn=#{gbn} ORDER BY idx DESC LIMIT 1;
+		SELECT contents, open_yn
+		  FROM NARO_CONTENTS
+		 WHERE del_yn='N'
+		   AND gbn=#{gbn}
+		 ORDER BY idx DESC
+		 LIMIT 1
 	</select>
 
 </mapper>

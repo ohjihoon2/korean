@@ -1,6 +1,15 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="kr.urimal365.dao.ContentsDAO"%>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%
 
+	List<Map<String, Object>> categoryNewList = ContentsDAO.getDAO().getCategoryNewList();
+	Map<String, Object> categoryInfo = ContentsDAO.getDAO().getCategoryInfo(1);
+	List<Map<String, Object>> contentList = ContentsDAO.getDAO().getContentList(1, 2);
+
+%>
 <section>
 	<div class="con_wrap">
 		<!-- --슬라이드-- -->

@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
    <transactionManager type="JDBC"/>  
    <dataSource type="POOLED">  
     <property name="driver" value="com.mysql.jdbc.Driver"/>
-    <property name="url" value="jdbc:mysql://192.168.0.129:3306/korean?userUnicode=true&amp;characterEncoding=UTF8&amp;serverTimezone=Asia/Seoul&amp;useSSL=false&amp;"/>
+    <property name="url" value="jdbc:mysql://192.168.0.129:3306/korean_dev?userUnicode=true&amp;characterEncoding=UTF8&amp;serverTimezone=Asia/Seoul&amp;useSSL=false&amp;"/>
     <property name="username" value="root"/>  
     <property name="password" value="1234"/> 
     <!-- Connection 해제 방지 --> 

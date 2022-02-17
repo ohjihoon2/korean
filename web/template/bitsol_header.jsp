@@ -17,16 +17,6 @@
 		<link rel="shortcut icon" href="/images/common/KR_icon.png" />
 		<link rel="apple-touch-icon" href="/images/common/KR_icon.png" />
 		<%
-			List<Contents> contList = ContentsDAO.getDAO().getBanner("3-2");
-			for (int i =0; i < contList.size();i++) {
-				if(i == 0){
-					System.out.println("list 시작!!! ");
-				}
-				System.out.println("i = " + i);
-				System.out.println(contList.get(i).toString());
-			}
-
-
 			List<CssDB> allCssList = CssDAO.getDAO().getCssList("8-1");
 			for (CssDB css:allCssList) {
 		%>
@@ -81,10 +71,9 @@
 				<!-- --logo-- -->
 				<h1 class="clearfix">
 					<div class="icon_menu"></div>
-					<a href="/index.jsp">
-						<img src="images/logo.png" alt="logo" class="mr20">
-						<p>국립국어원 온라인 소식지</p>
-						<p>쉼표, 마침표.</p>
+					<a href="/">
+						<img src="images/logo_w.png" alt="logo">
+						<img src="images/logo_b.png" alt="logo">
 					</a>
 					<div class="icon_search"></div>
 				</h1>

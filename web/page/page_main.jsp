@@ -1,10 +1,10 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="kr.urimal365.dao.ContentsDAO"%>
+<%@ page import="kr.urimal365.dto.Contents" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%
-
 	List<Map<String, Object>> categoryNewList = ContentsDAO.getDAO().getCategoryNewList();
 	Map<String, Object> categoryInfo = ContentsDAO.getDAO().getCategoryInfo(1);
 	List<Map<String, Object>> contentList = ContentsDAO.getDAO().getContentList(1, 2);
@@ -14,10 +14,15 @@
 	<div class="con_wrap">
 		<!-- --슬라이드-- -->
 		<div class="slide clearfix">
+			<% List<Contents> getBanner = ContentsDAO.getDAO().getBanner("3-2"); %>
+<%--			<%= getBanner.toString() %>--%>
+			<% if(getBanner.size() != 0) { %>
 			<div class="one-time pt50">
-				<div><a href="#"><img src="images/slide1.jpg" alt="국어원 소식 그림"></a></div>
-				<div><a href="#"><img src="images/slide2.jpg" alt="575돌 한글날 이벤트 당첨자 발표 그림"></a></div>
+				<% for(int i= 0; i < getBanner.size(); i++) { %>
+					<%= getBanner.get(i).getContents() %>
+				<% } %>
 			</div>
+			<% } %>
 		</div>
 
 		<!-- --새로운 글 모음-- -->

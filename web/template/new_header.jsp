@@ -9,7 +9,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html xml:lang="ko" lang="ko">
-	<head>
+<head>
 	<title>쉼표,마침표.</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -47,29 +47,29 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 	<!-- 국립국어원(news.korean.go.kr) 로그분석 소스-->
 	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-	  ga('create', 'UA-96053420-1', 'auto');
-	  ga('send', 'pageview');
+		ga('create', 'UA-96053420-1', 'auto');
+		ga('send', 'pageview');
 	</script>
-	</head>
+</head>
 <body>
-<%
+	<%
 	Contents cont = ContentsDAO.getDAO().getBanner("3-5");
 	if (cont != null) {
 
 %>
-<%=cont.getContents()%>
-<% } %>
+	<%=cont.getContents()%>
+	<% } %>
 <div class="headerWrap">
 	<div class="header">
 		<div class="menuBt">
-         <a href="#" class="nopc"><img src="img/common/kr_search_mo_off.png" alt="" onclick="searchToggle()" id="search_btn"></a>
-         <a href="#" class="js-mgnb default_popup" href="#newsletters_poppup"><img src="img/common/mobMenuBt_off.png" alt="" onclick="gnbToggle()" id="GNB_m_btn"></a>
-      </div>
+			<a href="#" class="nopc"><img src="img/common/kr_search_mo_off.png" alt="" onclick="searchToggle()" id="search_btn"></a>
+			<a href="#" class="js-mgnb default_popup" href="#newsletters_poppup"><img src="img/common/mobMenuBt_off.png" alt="" onclick="gnbToggle()" id="GNB_m_btn"></a>
+		</div>
 		<div class="kr-month"><img src="_userfiles/2021_2/month.png" alt=""></div>
 		<div class="kr-logo">
 			<h1 class="logo">
@@ -92,37 +92,26 @@
 	</div>
 
 	<div class="mgnbwrap">
-      <div class="mgnb nopc">
-         <div class="mg1">
-            <p><a href="index.jsp?control=page&amp;part=list&amp;category=1">국어 배우기</a></p>
-            <ul>
-               <li><a href="index.jsp?control=page&amp;part=list&amp;category=62" class="item1">실전 국어 표기법</a></li>
-               <li><a href="index.jsp?control=page&amp;part=list&amp;category=63" class="item2">읽기 좋은 글, 듣기 좋은 말</a></li>
-               <li><a href="index.jsp?control=page&amp;part=list&amp;category=64" class="item3">사전 두 배로 즐기기</a></li>
-            </ul>
-         </div>
-         <div class="mg2">
-            <p><a href="index.jsp?control=page&amp;part=list&amp;category=2">국어 알리기</a></p>
-            <ul>
-               <li><a href="index.jsp?control=page&amp;part=list&amp;category=65" class="item4">국어원 30년</a></li>
-               <li><a href="index.jsp?control=page&amp;part=list&amp;category=56" class="item5">국어원 소식</a></li>
-               <li><a href="index.jsp?control=page&amp;part=list&amp;category=57" class="item6">우리말 다듬기</a></li>
-            </ul>
-         </div>
-         <div class="mg3">
-            <p><a href="index.jsp?control=page&amp;part=list&amp;category=3">국어로 바라보기</a></p>
-            <ul>
-               <li><a href="index.jsp?control=page&amp;part=list&amp;category=66" class="item7">100년 전 우리말 풍경</a></li>
-               <li><a href="index.jsp?control=page&amp;part=list&amp;category=60" class="item8">우리말, 그리고 사람</a></li>
-            </ul>
-         </div>
-         <div class="mg4">
-            <p><a href="index.jsp?control=page&amp;part=list&amp;category=4">국어로 함께하기</a></p>
-            <ul>
-               <li><a href="index.jsp?control=page&amp;part=list&amp;category=61" class="item9">기획 행사</a></li>
-               <li><a href="index.jsp?control=page&amp;part=list&amp;category=59" class="item10">우리말 풀기</a></li>
-            </ul>
-         </div>
+		<div class="mgnb nopc">
+			<% List<NewsCategory> category = NewsCategoryDAO.getDAO().getHeadCategoryList();
+				for(int i = 0; i < category.size(); i++) { %>
+			<div class="mg<%=i%>">
+				<p>
+					<a href="index.jsp?control=page&amp;part=list&amp;category=<%=category.get(i).getIdx() %>">
+						<%=category.get(i).getName() %>
+					</a>
+				</p>
+				<ul>
+					<%
+						List<NewsCategory> categoryDetail = NewsCategoryDAO.getDAO().getDepthCategoryList(category.get(i).getIdx());
+						for(int j = 0; j < categoryDetail.size(); j++) { %>
+					<li><a href="<%=categoryDetail.get(j).getLink() %>" class="item1">
+						<%=categoryDetail.get(j).getName() %>
+					</a></li>
+					<% } %>
+				</ul>
+			</div>
+			<% } %>
 			<!-- 한글날특별호 -->
 			<div class="mg5">
 				<p><a href="index.jsp?control=page&amp;part=list&amp;category=50">한글날 특별호</a></p>
@@ -137,13 +126,13 @@
 					<li><a href="index.jsp?control=page&part=view&idx=13078" class="item18">한글날맞이 참여 행사</a></li>
 				</ul>
 			</div>
-         <div class="btn-news">
-            <ul>
-               <li><a href="#newsletters_poppup" class="default_popup"><img src="img/common/btn_newsletter.jpg" alt="소식지 신청하기"></a></li>
-               <li><a href="/index.jsp?control=page&part=replay"><img src="img/common/btn_replay.jpg" alt="소식지 다시보기"></a></li>
-            </ul>
-         </div>
-      </div>
-   </div>
+			<div class="btn-news">
+				<ul>
+					<li><a href="#newsletters_poppup" class="default_popup"><img src="img/common/btn_newsletter.jpg" alt="소식지 신청하기"></a></li>
+					<li><a href="/index.jsp?control=page&part=replay"><img src="img/common/btn_replay.jpg" alt="소식지 다시보기"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
 <iframe src="/template/google.html" style="display:none;"></iframe>

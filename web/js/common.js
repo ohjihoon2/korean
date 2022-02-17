@@ -1,6 +1,4 @@
 $(document).ready(function() {
-	//날짜수정
-	dateReset();
 
 	$(window).resize(function (){
 		var width_size = window.outerWidth;
@@ -66,18 +64,3 @@ $(document).ready(function() {
 		$('#mobile_gnb').removeClass('on');
 	});
 });
-
-function dateReset() {
-	var date = new Date();
-
-	var year = date.getFullYear(); // 년도
-	var month = date.getMonth() + 1;  // 월
-
-	if(month < 10) {
-		month = '0' + String(month);
-	}
-
-	var dateStr = year + "." + month;
-
-	$('#month').text(dateStr);
-}

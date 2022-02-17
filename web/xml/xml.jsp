@@ -23,8 +23,6 @@
 	param.put("startDate", startDate);
 	param.put("endDate", endDate);
 	List<NewsView> newsXmlList = NewsViewDAO.getDAO().getXmlList(param);
-	
-	System.out.println(newsXmlList);
 %>
 <Syndicate>
 	<%

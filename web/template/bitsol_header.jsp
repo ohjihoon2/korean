@@ -1,11 +1,11 @@
 <%@page import="kr.urimal365.dao.CssDAO"%>
 <%@page import="kr.urimal365.dto.CssDB"%>
-<%@page import="kr.urimal365.util.UtilFunction"%>
-<%@page import="kr.urimal365.dao.ContentsDAO"%>
-<%@page import="kr.urimal365.dto.Contents"%>
 <%@page import="kr.urimal365.dao.NewsCategoryDAO"%>
 <%@page import="kr.urimal365.dto.NewsCategory"%>
 <%@page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="kr.urimal365.dto.Contents" %>
+<%@ page import="kr.urimal365.dao.ContentsDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html xml:lang="ko" lang="ko">
@@ -81,72 +81,80 @@
 				<!-- --logo-- -->
 				<h1 class="clearfix">
 					<div class="icon_menu"></div>
-					<a>
+					<a href="/index.jsp">
 						<img src="images/logo.png" alt="logo" class="mr20">
 						<p>국립국어원 온라인 소식지</p>
 						<p>쉼표, 마침표.</p>
 					</a>
 					<div class="icon_search"></div>
 				</h1>
+
+				<% Date nowDate = new Date();
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM");
+				//원하는 데이터 포맷 지정 String
+				String strNowDate = simpleDateFormat.format(nowDate);
+				%>
+
 				<!-- --연도-- -->
-				<p id="month" class="mt25"></p>
+				<p id="month" class="mt25"><%= strNowDate %></p>
 				<!-- --search-- -->
-				<div class="search mt10">
-					<input type="text" class="search_term" placeholder="검색어를 입력해주세요.">
-					<button type="submit" class="search_btn">
-						<i class="fa fa-search"></i>
-					</button>
-				</div>
+				<form method="get" action="index.jsp">
+					<div class="search mt10">
+						<input type="hidden" name="control" value="page">
+						<input type="hidden" name="part" value="serch">
+						<input type="text" class="search_term" title="" value="" name="searchTxt" placeholder="검색어를 입력하세요" />
+						<button type="submit" class="search_btn">
+							<i class="fa fa-search"></i>
+						</button>
+					</div>
+				</form>
+				<% List<NewsCategory> category = NewsCategoryDAO.getDAO().getHeadCategoryList(); %>
 				<!-- --nav-- -->
 				<nav class="mt20">
 					<ul>
+				<% for(int i = 0; i < category.size(); i++) { %>
 						<li>
-							<a href="#">국어 <span class="bold">배우기</span></a>
+							<a href="<%=category.get(i).getLink() %>">
+					<% String str = category.get(i).getName();
+			   	       String res[] = str.split(" ");
+				    for(int j = 0; j < res.length; j++) {
+						if(j == 1) { %>
+								<span class="bold"><%=res[j] %></span>
+						<% }
+						else { %>
+							<%= res[j] %>
+						<% } %>
+					<% } %>
+							</a>
 						</li>
-						<li>
-							<a href="#">국어 <span class="bold">알리기</span></a>
-						</li>
-						<li>
-							<a href="#">국어로 <span class="bold">바라보기</span></a>
-						</li>
-						<li>
-							<a href="#">국어로 <span class="bold">함께하기</span></a>
-						</li>
-						<li>
-							<a href="#">한글날 <span class="bold">특별호</span></a>
-						</li>
+				<% } %>
 					</ul>
 				</nav>
 				<ul id="mobile_gnb">
+					<% for(int i = 0; i < category.size(); i++) { %>
 					<li>
-						<p>국어 <span class="bold">배우기</span></p>
+						<p>
+							<% String str = category.get(i).getName();
+								String res[] = str.split(" ");
+								for(int j = 0; j < res.length; j++) {
+									if(j == 1) { %>
+							<span class="bold"><%=res[j] %></span>
+							<% }
+							else { %>
+							<%= res[j] %>
+							<% } %>
+							<% } %>
+						</p>
 						<ul>
-							<li><a href="#">뭉치가 알려주는 국어 말뭉치</a></li>
-							<li><a href="#">문장 다듬기</a></li>
+							<% List<NewsCategory> categoryDetail = NewsCategoryDAO.getDAO().getDepthCategoryList(category.get(i).getIdx());
+							for(int j = 0; j < categoryDetail.size(); j++) { %>
+								<li><a href="<%=categoryDetail.get(j).getLink() %>" class="item1">
+									<%=categoryDetail.get(j).getName() %>
+								</a></li>
+							<% } %>
 						</ul>
 					</li>
-					<li>
-						<p>국어 <span class="bold">알리기</span></p>
-						<ul>
-							<li><a href="#">우리말 다듬기</a></li>
-							<li><a href="#">살아 숨 쉬는 지역어</a></li>
-							<li><a href="#">이음이가 전하는 국어 소식</a></li>
-						</ul>
-					</li>
-					<li>
-						<p>국어로 <span class="bold">바라보기</span></p>
-						<ul>
-							<li><a href="#">한국어 교육, 그리고 우리</a></li>
-							<li><a href="#">우리말, 그리고 우리</a></li>
-						</ul>
-					</li>
-					<li>
-						<p>국어로 <span class="bold">함께하기</span></p>
-						<ul>
-							<li><a href="#">우리말 풀기</a></li>
-							<li><a href="#">기획행사 소개</a></li>
-						</ul>
-					</li>
+					<% } %>
 					<li>
 						<p>한글날 <span class="bold">특별호</span></p>
 						<ul>

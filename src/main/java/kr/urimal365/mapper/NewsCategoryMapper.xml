@@ -4,7 +4,12 @@
 <mapper namespace="kr.urimal365.dao.NewsCategoryMapper">
 	
 	<select id="getHeadCategoryList" resultType="NewsCategory">
-		SELECT idx, name, link FROM NARO_NEWS_CATEGORY WHERE lvl=1 AND del_yn='N' AND is_open = 'Y' ORDER BY sort_order;
+		SELECT idx, name, link
+		  FROM NARO_NEWS_CATEGORY
+		 WHERE lvl=1
+		   AND del_yn='N'
+		   AND is_open = 'Y'
+		 ORDER BY sort_order
 	</select>
 	<select id="getDepthCategoryList" parameterType="int" resultType="NewsCategory">
 		SELECT idx, name, link FROM NARO_NEWS_CATEGORY WHERE lvl=2 AND parent_idx=#{parentIdx} AND del_yn='N' AND is_open='Y' ORDER BY sort_order;

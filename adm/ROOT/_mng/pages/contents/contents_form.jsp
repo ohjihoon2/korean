@@ -3,19 +3,22 @@
 <%@ include file="/_common/dbopen.jsp" %>
 <%@ include file="/_common/conf.jsp" %>
 <%@ include file="/_common/function.jsp" %>
+
 <%
-  String gbn = IsNull(request.getParameter("gbn"), "QUIZ");
+
+  String gbn = request.getParameter("gbn");
+  String cmd = IsNull(request.getParameter("cmd"), "write");
 
 	if( "3-1".equals(gbn)) {
-    pageContext.setAttribute("PageHeader","메인 퀴즈 배너");    
+    pageContext.setAttribute("PageHeader","퀴즈배너");
   } else if( "3-2".equals(gbn)) {   
-    pageContext.setAttribute("PageHeader","메인 하단 베너1");
+    pageContext.setAttribute("PageHeader","메인 상단배너");
   } else if( "3-3".equals(gbn)) {   
-    pageContext.setAttribute("PageHeader","메인 하단 베너2");
+    pageContext.setAttribute("PageHeader","메인 하단배너");
   } else if( "3-4".equals(gbn)) {   
     pageContext.setAttribute("PageHeader","푸터");
   } else if( "3-5".equals(gbn)) {   
-    pageContext.setAttribute("PageHeader","메인 최상단 팝업 배너");
+    pageContext.setAttribute("PageHeader","최상단팝업배너");
   }
 	pageContext.setAttribute("PageDescription","컨텐츠를 등록 및 수정할 수 있습니다.");
 	pageContext.setAttribute("PageMenuID","3");
@@ -25,24 +28,18 @@
 <%
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	
-	String cmd = "write";
-	
+
 	try{
-		
 		String sql="";
-				
-		//////////////////// 레코드 정보 검색 /////////////////////		
+		//////////////////// 레코드 정보 검색 /////////////////////
 		String idx = REQParam( request.getParameter("idx") );
 		Hashtable data = new Hashtable();
 		
-		sql = " SELECT idx, contents, DATE_FORMAT(write_date,'%Y-%m-%d %H:%i:%s') AS str_write_date, write_id, open_yn,open_start_datetime,open_end_datetime FROM NARO_CONTENTS WHERE del_yn='N' AND idx=? ORDER BY idx DESC LIMIT 1 ";
+		sql = " SELECT idx, gbn, contents, DATE_FORMAT(write_date,'%Y-%m-%d %H:%i:%s') AS str_write_date, write_id, open_yn,open_start_datetime,open_end_datetime FROM NARO_CONTENTS WHERE del_yn='N' AND idx=? ORDER BY idx DESC LIMIT 1 ";
 		pstmt = con.prepareStatement( sql );		
-    pstmt.setString(1,idx);
+        pstmt.setString(1,idx);
 		rs = pstmt.executeQuery();		
 		DBHash( rs, data );
-	
-		
 %>
 <script src="/_js/common.js"></script>
 <script>
@@ -71,7 +68,7 @@
 </script>
 
 <form name="aform" method="POST">
-	<input type="hidden" name="cmd" value="<%=cmd%>"/>
+  <input type="hidden" name="cmd" value="<%=cmd%>"/>
   <input type="hidden" name="gbn" value="<%=gbn%>"/>
 	<input type="hidden" name="idx" value="<%=IsNull(data.get("idx"),"0")%>"/>
 	<div class="row">

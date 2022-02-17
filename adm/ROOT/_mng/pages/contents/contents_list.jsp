@@ -11,10 +11,7 @@
 <script>
 	function DoWrite(a)
 	{
-		var f = document.aform;
-		f.action="contents_form.jsp";
-		f.gbn.value = a;
-		f.submit();		
+		location.href = "contents_form.jsp?cmd=write&gbn="+a;
 	}
 	function onSearching(a){
 		var f = document.aform;
@@ -37,12 +34,13 @@
 		f.submit();
 	}
 
-	function GoView(pidx)
+	function GoView(pidx ,gbn)
 	{
 		var f = document.aform;
 		f.action="contents_form.jsp";
 		f.cmd.value="modify";
 		f.idx.value = pidx;
+		f.gbn.value = gbn;
 		f.submit();
 	}
 
@@ -111,7 +109,7 @@
 %>
 <form name="aform" method="GET">
 	<input type="hidden" name="cmd"/>    
-	<input type="hidden" name="gbn"/>    
+	<input type="hidden" name="gbn"/>
 	<input type="hidden" name="idx"/>    
 	<input type="hidden" name="quiz_idx"/>    
     <input type="hidden" name="cpage" value="<%=ncpage%>"/>
@@ -162,10 +160,10 @@
 					+"		NARO_CONTENTS a "
 					+"	WHERE "
 					+"		a.del_yn='N' "
-					+"	ORDER BY a.gbn,a.idx DESC LIMIT ? , ? ";
+					+"	ORDER BY a.idx DESC LIMIT ? , ? ";
 				pstmt = con.prepareStatement( sql );
 				pstmt.setInt(1,limit_offset);
-				pstmt.setInt(2,PAGE_SIZE);	
+				pstmt.setInt(2,PAGE_SIZE);
 			} else {	
 				sql =" 	SELECT "
 					+"		a.idx, a.gbn, a.contents, a.open_yn, a.del_yn, a.open_start_datetime, a.open_end_datetime, a.write_date, a.write_id "
@@ -173,30 +171,29 @@
 					+"		NARO_CONTENTS a "
 					+"	WHERE "
 					+"		a.del_yn='N' AND a.gbn = ? "
-					+"	ORDER BY a.gbn,a.idx DESC LIMIT ? , ? ";
+					+"	ORDER BY a.idx DESC LIMIT ? , ? ";
 				pstmt = con.prepareStatement( sql );
 				pstmt.setString(1, search_txt);				
 				pstmt.setInt(2,limit_offset);
 				pstmt.setInt(3,PAGE_SIZE);
 			}
-				rs = pstmt.executeQuery(); 
-				
+				rs = pstmt.executeQuery();
 				for( int i=1; rs.next(); i++ ) {
 					String gbn_txt = DBStr(rs,"gbn");
 					String gbn_show = "";
 					if(gbn_txt.equals("3-5")) { gbn_show = "최상단팝업배너"; }
 					else if(gbn_txt.equals("3-1")) { gbn_show = "퀴즈배너"; }
-					else if(gbn_txt.equals("3-2")) { gbn_show = "메인 상당배너 등록"; }
-					else if(gbn_txt.equals("3-3")) { gbn_show = "메인 하단배너 등록"; }
+					else if(gbn_txt.equals("3-2")) { gbn_show = "메인 상당배너"; }
+					else if(gbn_txt.equals("3-3")) { gbn_show = "메인 하단배너"; }
 					else if(gbn_txt.equals("3-4")) { gbn_show = "푸터"; }
 					else  { gbn_show = "N"; }
 %>                
                 <tr>
-                  <td><a href="javascript:GoView('<%=DBStr(rs,"idx")%>');"><%=i%></a></td>
-                  <td><a href="javascript:GoView('<%=DBStr(rs,"idx")%>');"><%=gbn_show%></a></td>
+                  <td><%=i%></td>
+                  <td><%=gbn_show%></td>
                   <td><%=DBStr(rs,"open_yn")%> | 개시일:<%=DBStr(rs,"open_start_datetime")%> | 종료일:<%=DBStr(rs,"open_end_datetime")%></td>
                   <td>
-                  	<button class="btn btn-inline btn-primary btn-xs" type="button" onclick="GoView('<%=DBStr(rs,"idx")%>');">상세보기</button>                  	
+                  	<button class="btn btn-inline btn-primary btn-xs" type="button" onclick="GoView('<%=DBStr(rs,"idx")%>','<%=DBStr(rs,"gbn")%>');">상세보기</button>
                   </td>
                   <td><%=DBStr(rs,"write_id")%></td>
                   <td><%=DBStr(rs,"write_date")%></td>

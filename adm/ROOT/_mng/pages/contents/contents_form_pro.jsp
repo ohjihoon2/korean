@@ -23,8 +23,8 @@
 		String idx 			= REQParam( request.getParameter("idx") );		
 
 %>
-<form name="aform" method="GET" action="contents_form.jsp">
-<input type="hidden" name="gbn" value="<%=gbn%>".>
+<form name="aform" method="GET" action="contents_list.jsp">
+	<input type="hidden" name="idx" value="<%=idx%>">
 </form>
 <%		
 		//////////////////////////////////// 등록 ///////////////////////////////////////
@@ -55,7 +55,26 @@
 				//out.println( "<script>alert('등록되지 않았습니다. 다시 시도해주세요.'); document.aform.submit(); </script>" );
 			//}		
 		//////////////////////////////////// 삭제 ///////////////////////////////////////
-		} else if( "remove".equals(cmd) ) {			
+		} else if( "modify".equals(cmd) ) {
+			String sql = "UPDATE naro_contents SET gbn=?, contents=?, open_yn=?, open_start_datetime=?, open_end_datetime=?, update_id=?, update_date=now() WHERE idx=?";
+			pstmt = con.prepareStatement( sql );
+
+			paramcnt=1;
+			pstmt.setString( paramcnt++, gbn );
+			pstmt.setString( paramcnt++, REQParam(request.getParameter("contents")) );
+			pstmt.setString( paramcnt++, REQCHKParam(request.getParameter("open_yn")) );
+			pstmt.setString( paramcnt++, REQParam(request.getParameter("open_start_datetime")) );
+			pstmt.setString( paramcnt++, REQParam(request.getParameter("open_end_datetime")) );
+			pstmt.setString( paramcnt++, (String)session.getAttribute("admin_user_id") );
+			pstmt.setString( paramcnt++, REQParam(request.getParameter("idx")) );
+			int in_cnt = pstmt.executeUpdate();
+
+			if( in_cnt > 0 ) {
+				out.println( "<script>alert('수정되었습니다.'); document.aform.action='contents_form.jsp'; document.aform.submit(); </script>" );
+			} else {
+				out.println( "<script>alert('수정되지 않았습니다. 다시 시도해주세요.'); document.aform.submit(); </script>" );
+			}
+		}else if( "remove".equals(cmd) ) {
 			String sql = " UPDATE NARO_CONTENTS SET del_yn='Y', update_id=?,  update_date=now() WHERE idx=? ";
 			pstmt = con.prepareStatement( sql );			
 			pstmt.setString( 1, (String)session.getAttribute("admin_user_id") );
@@ -63,7 +82,7 @@
 			int upd_cnt = pstmt.executeUpdate();		
 			
 			if( upd_cnt > 0 ) {
-				out.println( "<script>alert('삭제되었습니다.'); document.aform.submit(); </script>" );
+				out.println( "<script>alert('삭제되었습니다.'); document.aform.submit();</script>" );
 			} else {
 				out.println( "<script>alert('삭제되지 않았습니다. 다시 시도해주세요.'); document.aform.submit(); </script>" );
 			}							

@@ -40,6 +40,7 @@
 						   )
 		  AND del_yn ='N'
 		  AND is_open = 'Y'
+		ORDER BY SORT_ORDER
 	</select>
 
 </mapper>

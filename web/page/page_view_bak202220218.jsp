@@ -131,7 +131,6 @@
 
 <div class="contentWrap">
 	<div class="contents">
-		<div class="pt70"></div>
 	<% if (!after) { %>
 	<div class="post_visual_tit" style="background:url('<%=subheader_bgimg%>') no-repeat center center; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<%=subheader_bgimg%>', sizingMethod='scale');">
 	<h2>
@@ -176,50 +175,69 @@
 		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 	</div>
 </div>
-
-<div class="con_with mt100 clearfix">
-	<div class="con_bg"></div>
-	<h2 class="pt30">함께 보면 좋은 기사</h2>
-	<div class="add_btn"><a href="#">+ 더 보기</a></div>
-	<ul class="con_flex mt20">
+<div class="reportList">
+	<a href="#" class="reportViewBt"><img src="img/sub/reportBt_up.png" alt=""/></a>
+	<div class="report">
+		<p class="tit">함께 보면 좋은 기사 <a href="index.jsp?control=page&part=rank">+더보기</a></p>
+		<div class="reLis">
 		<%
 			List<NewsView> recentNewsList = NewsViewDAO.getDAO().recentNewsList(news.getCate1());
-
+			
 			for (NewsView recentNews : recentNewsList) {
 				String thumnail = recentNews.getDefaultThumbnailFile();
 				if (thumnail == null || "".equals("thumnail")) {
 					thumnail = "/images/common/thumnail_category_old.jpg";
 				}
 		%>
-		<li>
-			<a href="index.jsp?control=page&part=view&idx=<%=recentNews.getIdx() %>">
-				<div class="list_img">
-					<div class="add_hover"><img src="images/ico_add.png" alt="더보기"></div>
-					<img src="<%=thumnail %>" alt="">
-				</div>
-				<p class="tit_color"><%=recentNews.getCategoryName() %></p>
-				<p class="tit"><%=UtilFunction.removeTag(recentNews.getTitle()) %></p>
-			</a>
-		</li>
+			<div class="">
+				<a href="index.jsp?control=page&part=view&idx=<%=recentNews.getIdx() %>" class="reCont">
+					<img src="<%=thumnail %>" alt=""/>
+					<span><%=UtilFunction.removeTag(recentNews.getTitle()) %></span>
+				</a>
+			</div>
 		<%	}  %>
-	</ul>
+			
+		</div>
+	</div>
+	<div class="report">
+		<p class="tit">가장 인기 있는 기사 <a href="index.jsp?control=page&part=rank">+더보기</a></p>
+		<div class="reLis">
+		<%
+			List<NewsView> recentBestNewsList = NewsViewDAO.getDAO().recentBestNewsList(news.getCate1());
+		
+			for (NewsView recentBestNews : recentBestNewsList) {
+				String thumnail = recentBestNews.getDefaultThumbnailFile();
+				if (thumnail == null || "".equals("thumnail")) {
+					thumnail = "/images/common/thumnail_category_old.jpg";
+				}
+		%>
+			<div class="">
+				<a href="index.jsp?control=page&part=view&idx=<%=recentBestNews.getIdx() %>" class="reCont">
+					<img src="<%=thumnail %>" alt=""/>
+					<span><%=UtilFunction.removeTag(recentBestNews.getTitle()) %></span>
+				</a>
+			</div>
+		<%	} %>
+			
+		</div>
+	</div>
 </div>
 
-<%--<div class="quick" id="quick">--%>
-<%--	<div>--%>
-<%--		<% if (nextIdx == 0) { %>--%>
-<%--		<a href="javascript:alert('이전 글이 없습니다.');"><img src="img/sub/2021/quickPrev.png" alt=""/><span>이전 글</span></a>--%>
-<%--		<% } else { %>--%>
-<%--		<a href="index.jsp?control=page&part=view&idx=<%=nextIdx%>"><img src="img/sub/2021/quickPrev.png" alt=""/><span>이전 글</span></a>--%>
-<%--		<% } %>--%>
-<%--		<% if (prevIdx == 0) { %>--%>
-<%--		<a href="javascript:alert('다음 글이 없습니다.');"><img src="img/sub/2021/quickNext.png" alt=""/><span>다음 글</span></a>--%>
-<%--		<% } else { %>--%>
-<%--		<a href="index.jsp?control=page&part=view&idx=<%=prevIdx%>"><img src="img/sub/2021/quickNext.png" alt=""/><span>다음 글</span></a>--%>
-<%--		<% } %>--%>
-<%--	</div>--%>
-<%--	<a href="#" class="top" title="위로"><img src="img/sub/2021/btn_top.png" alt="위로"></a>--%>
-<%--</div>--%>
+<div class="quick" id="quick">
+	<div>
+		<% if (nextIdx == 0) { %>
+		<a href="javascript:alert('이전 글이 없습니다.');"><img src="img/sub/2021/quickPrev.png" alt=""/><span>이전 글</span></a>
+		<% } else { %>
+		<a href="index.jsp?control=page&part=view&idx=<%=nextIdx%>"><img src="img/sub/2021/quickPrev.png" alt=""/><span>이전 글</span></a>
+		<% } %>
+		<% if (prevIdx == 0) { %>
+		<a href="javascript:alert('다음 글이 없습니다.');"><img src="img/sub/2021/quickNext.png" alt=""/><span>다음 글</span></a>
+		<% } else { %>
+		<a href="index.jsp?control=page&part=view&idx=<%=prevIdx%>"><img src="img/sub/2021/quickNext.png" alt=""/><span>다음 글</span></a>
+		<% } %>
+	</div>
+	<a href="#" class="top" title="위로"><img src="img/sub/2021/btn_top.png" alt="위로"></a>
+</div>
 
 <script language="javascript" type="text/javascript">
 //<![CDATA[

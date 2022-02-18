@@ -22,7 +22,7 @@
 	try{ yyyy = ""+Integer.parseInt(yyyy); } catch (NumberFormatException ex){ yyyy=""; }
 	try{ mm = ""+Integer.parseInt(mm); } catch (NumberFormatException ex){ mm=""; }
 	
-	int pageSize = 8;
+	int pageSize = 6;
 	int limitOffset = (postPage-1) * pageSize;
 	
 	HashMap<String, Object> param = new HashMap<String, Object>();
@@ -95,18 +95,17 @@
 	}
 %>
 <li>
-				<div class="">
-					<p class="img">
-						<img src="<%=thumnail %>" alt="" class="bg"/>
-					</p>
-					<p class="cont">
-						<span class="cate"><%=post.getCategoryName() %></span>
-						<strong class="tit"><%=post.getTitle() %></strong>
-						<span class="day"><%=post.getWriteDate() %>.</span>
-					</p>
-					<span class="layer"><a href="index.jsp?control=page&part=view&idx=<%=post.getIdx()%>"><img src="img/sub/listBt.png" alt=""/></a></span>
-				</div>
+	<a href="index.jsp?control=page&part=view&idx=<%=post.getIdx()%>">
+		<div class="list_img">
+			<div class="add_hover"><img src="images/ico_add.png" alt="더보기"></div>
+			<img src="<%=thumnail %>" alt="">
+		</div>
+		<p class="tit_color"><%=post.getCategoryName() %></p>
+		<p class="tit"><%=post.getTitle() %></p>
+		<p class="tit_date"><%=post.getWriteDate() %>.</p>
+	</a>
 </li>
+
 <% } %>
 <% if (limitOffset == 0 && postList.size() == 0) {  %>
 <li class="nonData">

@@ -48,7 +48,7 @@
 	<select id="recentNewsList" resultMap="news">
 		SELECT a.idx, a.title, a.default_thumbnail_file, a.read_count, a.category_name,a.subtitle, ( SELECT name FROM NARO_NEWS_CATEGORY x WHERE x.idx=a.cate1 ) AS cate1_name			
 					FROM VW_NARO_NEWS a WHERE a.cate1=#{cate1}
-					ORDER BY a.idx DESC LIMIT 6;
+					ORDER BY a.idx DESC LIMIT 4;
 	</select>
 	
 	<select id="recentBestNewsList" resultMap="news">

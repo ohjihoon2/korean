@@ -21,7 +21,7 @@
 		<p class="title">
 			<strong>'<%=categoryTitle %>'</strong> 글 모음입니다.
 		</p>
-		<ul class="" id="post_list">
+		<ul class="" >
 
 		</ul>
 

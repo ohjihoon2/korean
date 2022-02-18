@@ -94,7 +94,6 @@ public class NewsCategoryDAO extends MyBatisConfig {
      * @return
      */
     public List<Map<String, Object>> getCategoryGroup(int categoryIdx) {
-        System.out.println("categoryIdx = " + categoryIdx);
         SqlSession sqlSession = getSqlSessionFactory().openSession(true);
 
         List<Map<String, Object>> var4;

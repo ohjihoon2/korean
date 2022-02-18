@@ -180,7 +180,7 @@
 <div class="con_with mt100 clearfix">
 	<div class="con_bg"></div>
 	<h2 class="pt30">함께 보면 좋은 기사</h2>
-	<div class="add_btn"><a href="#">+ 더 보기</a></div>
+	<div class="add_btn"><a href="/index.jsp?control=page&part=replay">+ 더 보기</a></div>
 	<ul class="con_flex mt20">
 		<%
 			List<NewsView> recentNewsList = NewsViewDAO.getDAO().recentNewsList(news.getCate1());

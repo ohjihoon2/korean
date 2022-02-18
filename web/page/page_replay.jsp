@@ -22,52 +22,49 @@
 		mm = "" + (currentCalendar.get(Calendar.MONTH) + 1); 
 	}
 %>
-<!DOCTYPE html>
-<html xml:lang="ko" lang="ko">
-<body>
-<div class="contentWrap contentWrapBg">
-	<form name="aform">
+<form name="aform">
 	<input type="hidden" name="control" value="page">
 	<input type="hidden" name="part" value="replay">
-	<div class="listStyle">
-		<p class="title">
-			<strong>'소식지 다시 보기'</strong> 글 모음입니다.
-		</p>
-		<div class="daySel">
-			<select name="category" title="" style="width:156px;">
-				<option value="0" selected="selected">::분류선택::</option>
-				<%
-					List<NewsCategory> newsCategoryList = NewsCategoryDAO.getDAO().newsCategoryLvl2();
-					for (NewsCategory newsCategory : newsCategoryList) {
-				%>
-				<option value="<%=newsCategory.getIdx()%>" <%=category==newsCategory.getIdx()?"selected":"" %>><%=newsCategory.getName() %></option>
-				<%	} %>
-			</select>
-			<span class="selN">/</span>
-			<select name="yyyy" title="" style="width:64px;">
-				<option value="_">:전체:</option>
-				<%	for (int y=currentCalendar.get(Calendar.YEAR); y>=2013; y--) {	%>
-					<option value="<%=y%>" <%=(""+y).equals(yyyy)?"selected":"" %>><%=y %></option>
-				<%	} %>
-			</select>
-			<span>년</span>
-			<select name="mm" title="" style="width:64px;">
-				<option value="_">:전체:</option>
-				<%	for (int m=1; m<=12; m++) {	%>
-					<option value="<%=m%>" <%=(""+m).equals(mm)?"selected":"" %>><%=m %></option>
-				<%	} %>
-			</select>
-			<span>월</span>
-			<button>이동</button>
-		</div>
-		<ul class="" id="post_list">
-			
-		</ul>
 
-		<a href="javascript:loadList();" class="lazyLoadBt" id="btn_post_more"><span>더보기</span></a>
+	<!-- --타이틀-- -->
+	<h2 class="pt70">
+		이전 소식지 보기
+	</h2>
+	<div class="daySel">
+		<select name="category" title="" style="width:156px;">
+			<option value="0" selected="selected">::분류선택::</option>
+			<%
+				List<NewsCategory> newsCategoryList = NewsCategoryDAO.getDAO().newsCategoryLvl2();
+				for (NewsCategory newsCategory : newsCategoryList) {
+			%>
+			<option value="<%=newsCategory.getIdx()%>" <%=category==newsCategory.getIdx()?"selected":"" %>><%=newsCategory.getName() %></option>
+			<%	} %>
+		</select>
+		<span class="selN">/</span>
+		<select name="yyyy" title="" style="width:64px;">
+			<option value="_">:전체:</option>
+			<%	for (int y=currentCalendar.get(Calendar.YEAR); y>=2013; y--) {	%>
+				<option value="<%=y%>" <%=(""+y).equals(yyyy)?"selected":"" %>><%=y %></option>
+			<%	} %>
+		</select>
+		<span>년</span>
+		<select name="mm" title="" style="width:64px;">
+			<option value="_">:전체:</option>
+			<%	for (int m=1; m<=12; m++) {	%>
+				<option value="<%=m%>" <%=(""+m).equals(mm)?"selected":"" %>><%=m %></option>
+			<%	} %>
+		</select>
+		<span>월</span>
+		<button>이동</button>
 	</div>
-	</form>
-</div>
+	<!-- --리스트-- -->
+	<div class="list_wrap">
+		<ul id="post_list" class="list_con con_flex">
+
+		</ul>
+		<div id="btn_post_more" class="add_btn mt70"><p onclick="loadList();">+ 더보기</p></div>
+	</div>
+</form>
 <script type="text/javascript">
 var list_page=1;
 var is_loadlist = false;
@@ -95,5 +92,3 @@ window.onload=function()
 	loadList();
 }
 </script>
-</body>
-</html>

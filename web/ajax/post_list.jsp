@@ -22,7 +22,7 @@
 	try{ yyyy = ""+Integer.parseInt(yyyy); } catch (NumberFormatException ex){ yyyy=""; }
 	try{ mm = ""+Integer.parseInt(mm); } catch (NumberFormatException ex){ mm=""; }
 	
-	int pageSize = 6;
+	int pageSize = 9;
 	int limitOffset = (postPage-1) * pageSize;
 	
 	HashMap<String, Object> param = new HashMap<String, Object>();
@@ -102,7 +102,7 @@
 		</div>
 		<p class="tit_color"><%=post.getCategoryName() %></p>
 		<p class="tit"><%=post.getTitle() %></p>
-		<p class="tit_date"><%=post.getWriteDate() %>.</p>
+		<p class="tit_date"><%=post.getWriteDate() %></p>
 	</a>
 </li>
 

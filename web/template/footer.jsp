@@ -205,14 +205,10 @@
 		<div class="inner">
 			<p class="footLogo"><a href="http://www.korean.go.kr/" target="_blank"><img src="img/common/footLogo.png" alt=""/></a></p>
 			<%
-			 	Contents footer = ContentsDAO.getDAO().getFooter("3-4");
+			 	Contents footer = ContentsDAO.getDAO().getSelectOneBanner("3-4");
 			%>
 			<%--footer.getContents() --%> 
-			
 			<p class="address">
-				<!-- <span class="add">우편번호 07511 서울 강서구 금낭화로 154 (방화동 827) / 대표전화: 02-2669-9775 (평일 9~18시)</span>
-				<span class="copy">≪쉼표, 마침표.≫의 저작권은 국립국어원에 있습니다.</span>
-				<span>발행인:송철의 / 기획·편집:정호성·박선·김지숙 / 제작:(주)인포아트커뮤니케이션</span> -->
 				<%=footer.getContents() %>
 			</p>
 			 

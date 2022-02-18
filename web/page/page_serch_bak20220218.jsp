@@ -1,4 +1,6 @@
+<!DOCTYPE html>
 <%@page import="kr.urimal365.util.UtilFunction"%>
+<html xml:lang="ko" lang="ko">
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -41,24 +43,23 @@
 		searchTxt = searchTxt.replaceAll("~", "&#126;");
 	}
 %>
-<form name="aform">
-	<input type="hidden" name="category" value="<%=category%>">
-	<input type="hidden" name="searchTxt" value="<%=searchTxt%>">
-</form>
+<body>
+<div class="contentWrap contentWrapBg">
+	<form name="aform">
+		<input type="hidden" name="category" value="<%=category%>">
+		<input type="hidden" name="searchTxt" value="<%=searchTxt%>">
+	</form>
+	<div class="listStyle">
+		<p class="title">
+			<strong>'<%=searchTxt %> 검색결과'</strong> 목록입니다.
+		</p>
+		<ul class="" id="post_list">
+			
+		</ul>
 
-<!-- --타이틀-- -->
-<h2 class="pt70">
-	<span class="bold">'<%=searchTxt %> 검색결과'</span> 입니다.
-</h2>
-
-<!-- --리스트-- -->
-<div class="list_wrap">
-	<ul id="post_list" class="list_con con_flex">
-
-	</ul>
-	<div id="btn_post_more" class="add_btn mt70"><p onclick="loadList();">+ 더보기</p></div>
+		<a href="javascript:loadList();" id="btn_post_more"  class="lazyLoadBt"><span>더보기</span></a>
+	</div>
 </div>
-
 <script type="text/javascript">
 var list_page=1;
 var is_loadlist = false;
@@ -84,3 +85,5 @@ window.onload=function()
 	loadList();
 }
 </script>
+</body>
+</html>

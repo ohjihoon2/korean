@@ -120,13 +120,13 @@
 			<% for(int i= 0; i < contentList3.size(); i++) { %>
 			<li>
 				<a href="#">
-					<img src="images/2022_2/sub31_2list.jpg" alt="장소원 원장님 사진">
+					<img src="<%= contentList3.get(i).get("banner_file") %>" alt="">
 					<ul>
-						<li class="tit_color">우리말, 그리고 사람</li>
-						<li class="tit_bold">국민의 국어능력을<br> 높이겠습니다.</li>
+						<li class="tit_color"><%= contentList3.get(i).get("category") %></li>
+						<li class="tit_bold"><%= contentList3.get(i).get("title") %></li>
 						<li class="line_short"></li>
-						<li>국립 국어원 장소원 원장</li>
-						<li class="tit_date mt20">2021. 12. 20.</li>
+						<li><%= contentList3.get(i).get("subtitle") %></li>
+						<li class="tit_date mt20"><%= contentList3.get(i).get("write_date") %></li>
 					</ul>
 					</img>
 				</a>

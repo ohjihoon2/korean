@@ -1,6 +1,5 @@
 <%@page import="kr.urimal365.util.UtilFunction"%>
 <%@page import="kr.urimal365.dao.NewsCategoryDAO"%>
-<%@page import="kr.urimal365.dto.NewsCategory"%>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -28,12 +27,6 @@
 	
 	String categoryTitle = NewsCategoryDAO.getDAO().getCategoryTitle(category).getName();
 
-	/**
-	 * 카테고리 그룹 예제
-	 */
-	List<Map<String, Object>> categoryGroup = NewsCategoryDAO.getDAO().getCategoryGroup(1);
-	System.out.println("categoryGroup = " + categoryGroup);
-
 	categoryTitle = UtilFunction.removeTag(categoryTitle);
 %>
 <form name="aform">
@@ -44,21 +37,25 @@
 	<%= subject(categoryTitle) %>
 </h2>
 
+<% List<Map<String, Object>> categoryGroup = NewsCategoryDAO.getDAO().getCategoryGroup(category); %>
+
 <!-- --탭메뉴 / a태그 각각의 페이지로 이동-- -->
+<% if(categoryGroup.size() > 2) { %>
 <ul class="list_tab con_flex mt50 mb10">
-	<li class="on"><a href="sub1_list0.html">전체</a></li>
-	<li><a href="sub1_list1.html">아 다르고 어 다른 우리말</a></li>
-	<li><a href="sub1_list2.html">뭉치가 알려주는 국어 말뭉치</a></li>
-	<li><a href="sub1_list3.html">문장 다듬기</a></li>
+	<% for(int i= 0; i < categoryGroup.size(); i++) { %>
+	<li class="<% if(categoryGroup.get(i).get("idx").equals(category)) { %> on <% } %>"><a href="/index.jsp?control=page&part=list&category=<%= categoryGroup.get(i).get("idx") %>"><%= categoryGroup.get(i).get("name") %></a></li>
+	<% } %>
 </ul>
+<% } %>
 
 <!-- --리스트-- -->
 <div class="list_wrap">
 	<ul id="post_list" class="list_con con_flex">
 
 	</ul>
-	<div class="add_btn mt70"><p onclick="loadList();">+ 더보기</p></div>
+	<div id="btn_post_more" class="add_btn mt70"><p onclick="loadList();">+ 더보기</p></div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript">
 var list_page=1;

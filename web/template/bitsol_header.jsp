@@ -144,23 +144,10 @@
 						</ul>
 					</li>
 					<% } %>
-					<li>
-						<p>한글날 <span class="bold">특별호</span></p>
-						<ul>
-							<li><a href="#">축사</a></li>
-							<li><a href="#">세계 한국어 한마당 안내</a></li>
-							<li><a href="#">전 세계가 인정한 한글</a></li>
-							<li><a href="#">세계로 뻗어 가는 한국어</a></li>
-							<li><a href="#">폴란드의 한국어 열풍</a></li>
-							<li><a href="#">돌민정음으로 바라본 한류</a></li>
-							<li><a href="#">한글을 사랑한 헐버트</a></li>
-							<li><a href="#">한글날맞이 참여 행사</a></li>
-						</ul>
-					</li>
 				</ul>
 				<ul class="head_btn mt20">
 					<li><a href="#">소식지 신청하기</a></li>
-					<li><a href="#">이전 소식지 보기</a></li>
+					<li><a href="/index.jsp?control=page&part=replay">이전 소식지 보기</a></li>
 				</ul>
 			</div>
 		</div>

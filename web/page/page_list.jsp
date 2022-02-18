@@ -1,6 +1,8 @@
 <%@page import="kr.urimal365.util.UtilFunction"%>
 <%@page import="kr.urimal365.dao.NewsCategoryDAO"%>
 <%@page import="kr.urimal365.dto.NewsCategory"%>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%! public String subject(String str) {
@@ -25,6 +27,13 @@
 	try{ category = Integer.parseInt(request.getParameter("category")); } catch( NumberFormatException ex ){ }
 	
 	String categoryTitle = NewsCategoryDAO.getDAO().getCategoryTitle(category).getName();
+
+	/**
+	 * 카테고리 그룹 예제
+	 */
+	List<Map<String, Object>> categoryGroup = NewsCategoryDAO.getDAO().getCategoryGroup(1);
+	System.out.println("categoryGroup = " + categoryGroup);
+
 	categoryTitle = UtilFunction.removeTag(categoryTitle);
 %>
 <form name="aform">

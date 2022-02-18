@@ -30,4 +30,16 @@
 					   WHERE idx =#{categoryIdx})
 	</select>
 
+	<select id="getCategoryGroup" parameterType="int" resultType="Map">
+		SELECT idx, if(lvl = 1, '전체', name) AS name
+		FROM naro_news_category
+		WHERE parent_idx = (
+								SELECT PARENT_IDX
+								  FROM NARO_NEWS_CATEGORY b
+								 WHERE idx = #{idx}
+						   )
+		  AND del_yn ='N'
+		  AND is_open = 'Y'
+	</select>
+
 </mapper>

@@ -3,6 +3,7 @@ package kr.urimal365.dao;
 import kr.urimal365.dto.NewsCategory;
 
 import java.util.List;
+import java.util.Map;
 
 public interface NewsCategoryMapper {
     List<NewsCategory> getHeadCategoryList();
@@ -15,4 +16,5 @@ public interface NewsCategoryMapper {
 
     NewsCategory getCategoryTitle(int var1);
 
+    List<Map<String, Object>> getCategoryGroup(int var1);
 }

@@ -88,4 +88,23 @@ public class NewsCategoryDAO extends MyBatisConfig {
         return var4;
     }
 
+    /**
+     * 상세 페이지 카테고리 그룹
+     * @param categoryIdx
+     * @return
+     */
+    public List<Map<String, Object>> getCategoryGroup(int categoryIdx) {
+        System.out.println("categoryIdx = " + categoryIdx);
+        SqlSession sqlSession = getSqlSessionFactory().openSession(true);
+
+        List<Map<String, Object>> var4;
+        try {
+            var4 = ((NewsCategoryMapper)sqlSession.getMapper(NewsCategoryMapper.class)).getCategoryGroup(categoryIdx);
+        } finally {
+            sqlSession.close();
+        }
+
+        return var4;
+    }
+
 }

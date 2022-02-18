@@ -3,33 +3,44 @@
 
 <mapper namespace="kr.urimal365.dao.ContentsMapper">
 	<select id="getBanner" resultType="Contents" parameterType="Map">
-		SELECT *
+		SELECT contents
 		  FROM NARO_CONTENTS
-		 WHERE del_yn='N'
+		 WHERE del_yn = 'N'
+		   AND open_yn = 'Y'
 		   AND date_format(NOW(), '%Y-%m-%d %H:%i') BETWEEN  open_start_datetime  AND open_end_datetime
 		   AND gbn=#{gbn} ORDER BY idx DESC
 	</select>
 
+	<select id="getSelectOneBanner" resultType="Contents" parameterType="String">
+		SELECT contents
+		FROM NARO_CONTENTS
+		WHERE del_yn='N'
+		  AND open_yn = 'Y'
+		  AND date_format(NOW(), '%Y-%m-%d %H:%i') BETWEEN  open_start_datetime  AND open_end_datetime
+		  AND gbn=#{gbn} ORDER BY idx DESC LIMIT 1
+	</select>
+
 	<select id="getCategoryNewList" resultType="HashMap">
-		SELECT a.*
-		  FROM naro_news a
-		 INNER JOIN (
-						SELECT *
-						FROM naro_news_category
-						WHERE parent_idx IN (
-												SELECT idx
-												FROM naro_news_category
-												WHERE is_open ='Y'
-												  AND del_yn ='N'
-												  AND lvl = 1
-											)
-						  AND del_yn ='N'
-						  AND is_open = 'Y'
-					) b ON a.category_idx = b.idx
-		 WHERE a.open_yn ='Y'
-		   AND a.del_yn = 'N'
-		 ORDER BY a.write_date DESC
-		 LIMIT 8
+		SELECT a.idx
+			 , a.title
+			 , a.thumbnail_file
+			 , b.name as category
+		FROM naro_news a
+				 INNER JOIN (SELECT idx
+								  , name
+							 FROM naro_news_category
+							 WHERE parent_idx IN (SELECT idx
+												  FROM naro_news_category
+												  WHERE is_open ='Y'
+													AND del_yn ='N'
+													AND lvl = 1
+							 )
+							   AND del_yn ='N'
+							   AND is_open = 'Y'
+		) b ON a.category_idx = b.idx
+		WHERE a.open_yn ='Y'
+		  AND a.del_yn = 'N'
+		ORDER BY a.write_date DESC LIMIT 8;
 	</select>
 
 	<select id="getCategoryInfo" resultType="HashMap" parameterType="int">
@@ -39,10 +50,16 @@
 	</select>
 
 	<select id="getContentList" resultType="HashMap" parameterType="Map">
-		SELECT a.*
+		SELECT a.idx
+			 , a.title
+			 , a.subtitle
+			 , a.banner_file
+			 , b.name as category
+			 , DATE_FORMAT(a.write_date, '%Y. %m. %d') as write_date
 	   	  FROM naro_news a
 		 INNER JOIN (
-						SELECT *
+						SELECT idx
+						     , name
 						FROM naro_news_category
 						WHERE parent_idx = #{idx}
 						  AND del_yn ='N'
@@ -51,17 +68,7 @@
 					) b ON a.category_idx = b.idx
 		 WHERE a.open_yn ='Y'
 		   AND a.del_yn = 'N'
-		 ORDER BY a.write_date DESC
-		 LIMIT #{limit}
+		   AND a.banner_yn = 'Y'
+		 ORDER BY a.idx DESC LIMIT #{limit}
 	</select>
-
-	<select id="getFooter" resultType="Contents" parameterType="String">
-		SELECT contents, open_yn
-		  FROM NARO_CONTENTS
-		 WHERE del_yn='N'
-		   AND gbn=#{gbn}
-		 ORDER BY idx DESC
-		 LIMIT 1
-	</select>
-
 </mapper>

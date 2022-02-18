@@ -23,7 +23,11 @@
 	</select>
 	
 	<select id="getCategoryTitle" parameterType="int" resultType="NewsCategory">
-		SELECT (CASE WHEN lvl=1 THEN idx ELSE parent_idx END) as cate_idx, name FROM NARO_NEWS_CATEGORY WHERE idx=#{categoryIdx};
+		SELECT a.name
+		  FROM NARO_NEWS_CATEGORY a
+		 WHERE idx = (SELECT parent_idx
+					    FROM NARO_NEWS_CATEGORY b
+					   WHERE idx =#{categoryIdx})
 	</select>
 
 </mapper>

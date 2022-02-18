@@ -14,7 +14,15 @@
 <%-- 헤더 --%>
 <jsp:include page="bitsol_header.jsp"></jsp:include>
 <%-- 본문 --%>
+<section>
+	<div class="con_wrap">
 <jsp:include page="<%=centerFile %>"></jsp:include>
+<%-- 카테고리 --%>
+<% if(!part.equals("main")) { %>
+	<jsp:include page="bitsol_category.jsp"></jsp:include>
+<% } %>
+	</div>
+</section>
 <%-- 푸터 --%>
 <jsp:include page="bitsol_footer.jsp"></jsp:include>
 </html>

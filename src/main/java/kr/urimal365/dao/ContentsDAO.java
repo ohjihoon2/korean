@@ -39,12 +39,12 @@ public class ContentsDAO extends MyBatisConfig {
         return var4;
     }
 
-    public Contents getFooter(String gbn) {
+    public Contents getSelectOneBanner(String gbn) {
         SqlSession sqlSession = getSqlSessionFactory().openSession(true);
 
         Contents var4;
         try {
-            var4 = ((ContentsMapper)sqlSession.getMapper(ContentsMapper.class)).getFooter(gbn);
+            var4 = ((ContentsMapper)sqlSession.getMapper(ContentsMapper.class)).getSelectOneBanner(gbn);
         } finally {
             sqlSession.close();
         }

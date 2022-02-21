@@ -62,7 +62,19 @@
 	</select>
 	
 	<select id="postList" resultMap="news" parameterType="java.util.HashMap">
-	SELECT a.idx, a.title, a.thumbnail_file, a.read_count, a.category_name, a.default_thumbnail_file, REPLACE(LEFT(a.publish_date,10),'-','.') AS write_date FROM VW_NARO_NEWS a WHERE 1=1
+	SELECT a.idx,
+	       a.title,
+	       a.thumbnail_file,
+	       a.read_count,
+	       a.category_name,
+	       a.default_thumbnail_file,
+	       REPLACE(LEFT(a.publish_date,10),'-','.') AS write_date
+	  FROM VW_NARO_NEWS a
+	 WHERE 1=1
+	<if test='part == "list" || part == "view"'>
+		AND parent_is_open = 'Y'
+	 	AND is_open = 'Y'
+	</if>
 	<if test="category>0">
 		AND ( a.category_idx=#{category} OR a.cate1=#{cate1} )
 	</if>

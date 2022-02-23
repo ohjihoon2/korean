@@ -1,3 +1,4 @@
+<%@ page import="java.util.Hashtable" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%
 	pageContext.setAttribute("PageHeader", null);
@@ -42,12 +43,11 @@
 	try{
 
 		String statistics = REQParam(request.getParameter("statistics"));
-
 		String search_txt = REQParam(request.getParameter("search_txt"));
 
 		/***************** PAGE 관련 ***************/
 		// 시작위치 offset ( 페이지 - 1 ) * 페이즈 글수
-		int PAGE_SIZE = 25; //한페이지당 글수
+		int PAGE_SIZE = 15; //한페이지당 글수
 
 		String str_cpage = REQParam(request.getParameter("cpage"));
 		if(!IsValid(str_cpage)) { str_cpage="1"; }
@@ -68,7 +68,18 @@
 		int max_page = (int)Math.ceil( (double)record_count / PAGE_SIZE ) ; 			//총 페이지 번호
 		/*------------------------------------------*/
 
+		String data = new Hashtable();
+
+		sql = "   SELECT COUNT(*) AS total_user "
+				+"  FROM naro_log_connect_user "
+				+" WHERE (connect_date BETWEEN '2022-02-15' AND '2022-02-23') ";
+		pstmt = con.prepareStatement( sql );
+//		pstmt.setString(1,idx);
+		rs = pstmt.executeQuery();
+		DBStr( rs, data.get("total") );
+
 %>
+<%= data.toString()%>
 <form name="aform" method="GET">
 	<input type="hidden" name="cmd"/>
 	<input type="hidden" name="statistics" value="<%=statistics%>"/>
@@ -78,6 +89,75 @@
 	<div class="cus-half">
 		<%@ include file="statistics.jsp" %>
 		<div>
+			<div class="row">
+				<div class="col-xs-12 cus-height">
+					<div class="box" style="max-height: 100%;">
+						<div class="box-header">
+							<h3 class="box-title">기간별 게시글 조회</h3>
+
+							<div class="box-tools">
+								<div class="input-group input-group-sm" style="width: 280px;">
+									<input name="search_txt" class="form-control pull-right" type="text" placeholder="IP Search" value="<%=INPUT_VALUE(search_txt)%>">
+									<div class="input-group-btn">
+										<button class="btn btn-default" type="button" onclick="DoSearch();"><i class="fa fa-search"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body table-responsive no-padding">
+							<table class="table table-hover text-center">
+								<tbody>
+								<tr>
+									<th>순위</th>
+									<th>게시물</th>
+									<th>게시일</th>
+									<th>기간 조회수</th>
+								</tr>
+								<%
+									sql =" 	  SELECT "
+											+"		a.news_idx, c.name, b.title, DATE_FORMAT(b.write_date, '%Y-%m-%d %H:%m:%s') as write_date, SUM(view_count) AS view_count "
+											+"	FROM "
+											+"		naro_news_view_count a "
+											+" INNER JOIN "
+											+"		naro_news b ON a.news_idx = b.idx "
+											+" INNER JOIN "
+											+"		naro_news_category c ON c.idx = B.category_idx"
+											+"	WHERE "
+											+"		(dt BETWEEN '2022-02-15' AND '2022-02-23') "
+											+"	GROUP BY news_idx, name, title "
+											+"		ORDER BY view_count DESC LIMIT 7 ";
+									pstmt = con.prepareStatement( sql );
+//									pstmt.setString(1, "%"+search_txt+"%");
+//									pstmt.setInt(2,limit_offset);
+//									pstmt.setInt(3,PAGE_SIZE);
+
+									rs = pstmt.executeQuery();
+								%>
+
+								<%
+									for( int i=1; rs.next(); i++ ) {
+								%>
+								<tr>
+									<td><%=i%></td>
+									<td class="text-left"><%=DBStr(rs,"title")%></td>
+									<td><%=DBStr(rs,"write_date")%></td>
+									<td><%=DBStr(rs,"view_count")%></td>
+								</tr>
+								<%
+									}
+								%>
+								</tbody>
+							</table>
+						</div>
+						<!-- /.box-body -->
+						<div class="box-footer clearfix">
+							기간 총 접속자 수 : 기간 총 조회수 : 기간 방문당 조회 수 :
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="row">
 				<div class="col-xs-12 cus-height">
 					<div class="box" style="max-height: 100%;">
@@ -131,7 +211,8 @@
 								<%
 									}
 								%>
-								</tbody></table>
+								</tbody>
+							</table>
 						</div>
 						<!-- /.box-body -->
 						<div class="box-footer clearfix">
@@ -155,6 +236,7 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </form>

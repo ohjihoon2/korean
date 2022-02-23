@@ -20,7 +20,7 @@
 					<div>
 						<canvas id="myChart"></canvas>
 					</div>
-					<div style="padding:35px 127.5px 15px;">
+					<div style="padding:50px 127.5px 30px;">
 						<canvas id="myChart2"></canvas>
 					</div>
 				</div>

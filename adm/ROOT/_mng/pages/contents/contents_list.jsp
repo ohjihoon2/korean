@@ -125,7 +125,7 @@
 					<option value="" <%=selected6%>>전체보기</option>
 					<option value="3-5" <%=selected1%>>최상 단팝업 배너</option>
 					<option value="3-1" <%=selected2%>>퀴즈 배너</option>
-					<option value="3-2" <%=selected3%>>메인 상당배너 등록</option>
+					<option value="3-2" <%=selected3%>>메인 상단배너 등록</option>
 					<option value="3-3" <%=selected4%>>메인 하단배너 등록</option>
 					<option value="3-4" <%=selected5%>>푸터</option>
 				  </select>
@@ -134,7 +134,7 @@
                     <!--<button class="btn btn-default" type="button" onclick="DoSearch();"><i class="fa fa-search"></i></button>-->                    
                     <button class="btn btn-inline btn-primary btn-xs" style="margin-left:40px" type="button" onclick="DoWrite('3-5');">최상단팝업배너 등록</button>
 					<button class="btn btn-inline btn-primary btn-xs" style="margin-left:10px" type="button" onclick="DoWrite('3-1');">퀴즈배너 등록</button>
-					<button class="btn btn-inline btn-primary btn-xs" style="margin-left:10px" type="button" onclick="DoWrite('3-2');">메인 상당배너 등록</button>
+					<button class="btn btn-inline btn-primary btn-xs" style="margin-left:10px" type="button" onclick="DoWrite('3-2');">메인 상단배너 등록</button>
 					<button class="btn btn-inline btn-primary btn-xs" style="margin-left:10px" type="button" onclick="DoWrite('3-3');">메인 하단배너 등록</button>
 					<button class="btn btn-inline btn-primary btn-xs" style="margin-left:10px" type="button" onclick="DoWrite('3-4');">푸터 등록</button>
                   </div>                  
@@ -183,7 +183,7 @@
 					String gbn_show = "";
 					if(gbn_txt.equals("3-5")) { gbn_show = "최상단팝업배너"; }
 					else if(gbn_txt.equals("3-1")) { gbn_show = "퀴즈배너"; }
-					else if(gbn_txt.equals("3-2")) { gbn_show = "메인 상당배너"; }
+					else if(gbn_txt.equals("3-2")) { gbn_show = "메인 상단배너"; }
 					else if(gbn_txt.equals("3-3")) { gbn_show = "메인 하단배너"; }
 					else if(gbn_txt.equals("3-4")) { gbn_show = "푸터"; }
 					else  { gbn_show = "N"; }

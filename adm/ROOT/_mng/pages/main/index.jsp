@@ -1,4 +1,8 @@
 <%@ page import="java.util.Hashtable" %>
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Calendar" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%
 	pageContext.setAttribute("PageHeader", null);
@@ -16,6 +20,15 @@
 	function GoStatistics(stat) {
 		var f = document.aform;
 		f.statistics.value = stat;
+		f.action="index.jsp";
+		f.submit();
+	}
+
+	function DoPeriodSearch() {
+
+
+
+		var f = document.aform;
 		f.action="index.jsp";
 		f.submit();
 	}
@@ -67,19 +80,62 @@
 
 		int max_page = (int)Math.ceil( (double)record_count / PAGE_SIZE ) ; 			//총 페이지 번호
 		/*------------------------------------------*/
+		String start = REQParam(request.getParameter("start"));
+		String end = REQParam(request.getParameter("end"));
 
-		String data = new Hashtable();
+		if (start.equals("") || end.equals("")) {
+			Date nowDate = new Date();
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			//원하는 데이터 포맷 지정 String
+			String strNowDate = simpleDateFormat.format(nowDate);
+
+			//한달 전
+			Calendar mon = Calendar.getInstance();
+			mon.add(Calendar.MONTH , -1);
+			String strMonDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(mon.getTime());
+
+			start = strMonDate;
+			end = strNowDate;
+		}
+
+		Hashtable data = new Hashtable();
 
 		sql = "   SELECT COUNT(*) AS total_user "
 				+"  FROM naro_log_connect_user "
-				+" WHERE (connect_date BETWEEN '2022-02-15' AND '2022-02-23') ";
+				+" WHERE (connect_date BETWEEN ? AND ?) ";
 		pstmt = con.prepareStatement( sql );
-//		pstmt.setString(1,idx);
+		pstmt.setString(1, start);
+		pstmt.setString(2, end);
+
 		rs = pstmt.executeQuery();
-		DBStr( rs, data.get("total") );
+
+		DBHash( rs, data );
+
+		rs.close();
+		pstmt.close();
+
+		sql = "   SELECT sum(view_count) AS total_view "
+				+"  FROM naro_news_view_count"
+				+" WHERE (write_date BETWEEN ? AND ?) ";
+		pstmt = con.prepareStatement( sql );
+		pstmt.setString(1, start);
+		pstmt.setString(2, end);
+
+		rs = pstmt.executeQuery();
+
+		DBHash( rs, data );
+
+		rs.close();
+		pstmt.close();
+
+		double num = Double.parseDouble(data.get("total_view").toString()) / Double.parseDouble(data.get("total_user").toString());
+		DecimalFormat df = new DecimalFormat("0.00");
+
+		String avg = df.format(num);
+
+		data.put("avg", avg);
 
 %>
-<%= data.toString()%>
 <form name="aform" method="GET">
 	<input type="hidden" name="cmd"/>
 	<input type="hidden" name="statistics" value="<%=statistics%>"/>
@@ -93,15 +149,29 @@
 				<div class="col-xs-12 cus-height">
 					<div class="box" style="max-height: 100%;">
 						<div class="box-header">
-							<h3 class="box-title">기간별 게시글 조회</h3>
+							<h3 class="box-title">기간별 조회</h3>
 
-							<div class="box-tools">
-								<div class="input-group input-group-sm" style="width: 280px;">
-									<input name="search_txt" class="form-control pull-right" type="text" placeholder="IP Search" value="<%=INPUT_VALUE(search_txt)%>">
-									<div class="input-group-btn">
-										<button class="btn btn-default" type="button" onclick="DoSearch();"><i class="fa fa-search"></i></button>
+							<div class="box-tools costom-box">
+								<div>
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar"></i>
+										</div>
+										<input class="form-control pull-right" id="start" name="start" type="text" value="<%=start%>" >
 									</div>
 								</div>
+								<div>
+									<div class="input-group">
+										<div class="input-group-addon">
+											<i class="fa fa-calendar"></i>
+										</div>
+										<input class="form-control pull-right" id="end" name="end" type="text" value="<%=end%>">
+									</div>
+								</div>
+								<div class="input-group-btn">
+									<button class="btn btn-default" type="button" onclick="DoPeriodSearch();"><i class="fa fa-search"></i></button>
+								</div>
+
 							</div>
 						</div>
 						<!-- /.box-header -->
@@ -116,23 +186,24 @@
 								</tr>
 								<%
 									sql =" 	  SELECT "
-											+"		a.news_idx, c.name, b.title, DATE_FORMAT(b.write_date, '%Y-%m-%d %H:%m:%s') as write_date, SUM(view_count) AS view_count "
+											+"		c.news_idx, b.name, a.title, c.sum_view, DATE_FORMAT(a.write_date, '%Y-%m-%d') as write_date "
 											+"	FROM "
-											+"		naro_news_view_count a "
+											+"		NARO_NEWS a "
 											+" INNER JOIN "
-											+"		naro_news b ON a.news_idx = b.idx "
-											+" INNER JOIN "
-											+"		naro_news_category c ON c.idx = B.category_idx"
-											+"	WHERE "
-											+"		(dt BETWEEN '2022-02-15' AND '2022-02-23') "
-											+"	GROUP BY news_idx, name, title "
-											+"		ORDER BY view_count DESC LIMIT 7 ";
+											+"		NARO_NEWS_CATEGORY b ON A.category_idx  = B.idx "
+											+" INNER JOIN ( "
+											+"		SELECT news_idx ,SUM(view_count) AS sum_view "
+											+"		  FROM NARO_NEWS_VIEW_COUNT "
+											+"		 WHERE (write_date BETWEEN ? AND ? ) "
+											+"		 GROUP BY news_idx "
+											+"		) c ON a.idx  = c.news_idx "
+											+"  ORDER BY c.sum_view DESC LIMIT 7 ";
 									pstmt = con.prepareStatement( sql );
-//									pstmt.setString(1, "%"+search_txt+"%");
-//									pstmt.setInt(2,limit_offset);
-//									pstmt.setInt(3,PAGE_SIZE);
+									pstmt.setString(1, start);
+									pstmt.setString(2, end);
 
 									rs = pstmt.executeQuery();
+
 								%>
 
 								<%
@@ -142,17 +213,21 @@
 									<td><%=i%></td>
 									<td class="text-left"><%=DBStr(rs,"title")%></td>
 									<td><%=DBStr(rs,"write_date")%></td>
-									<td><%=DBStr(rs,"view_count")%></td>
+									<td><%=DBStr(rs,"sum_view")%></td>
 								</tr>
 								<%
 									}
+									rs.close();
+									pstmt.close();
 								%>
 								</tbody>
 							</table>
 						</div>
 						<!-- /.box-body -->
 						<div class="box-footer clearfix">
-							기간 총 접속자 수 : 기간 총 조회수 : 기간 방문당 조회 수 :
+							<strong> 총 접속자 : </strong> <%=data.get("total_user")%>
+							<strong> │ 총 조회 : </strong> <%=data.get("total_view")%>
+							<strong> │ 방문당 조회률 : </strong> <%=data.get("avg")%>
 						</div>
 					</div>
 				</div>
@@ -240,6 +315,35 @@
 		</div>
 	</div>
 </form>
+
+<script>
+	$(function () {
+		//DateTime picker
+		$('#start').datetimepicker({
+			format: "YYYY-MM-DD",
+		});
+		$('#end').datetimepicker({
+			format: "YYYY-MM-DD",
+		});
+
+		//CKEDITOR
+		CKEDITOR.replace('contents',{
+			width:"100%",
+			height:"400px",
+			"filebrowserUploadUrl":"/_mng/plugins/ckeditor/upload.jsp",
+			allowedContent:true
+		});
+
+
+
+		//Categroy Load
+		<% if( IsValid(data.get("category_parent_idx")) ) { %>
+		$('#category1').val('<%=data.get("category_parent_idx")%>');
+		onCate1Change('<%=data.get("category_parent_idx")%>', '<%=data.get("category_idx")%>');
+		<% } %>
+	});
+
+</script>
 
 <%
 	} catch( SQLException ex ) {

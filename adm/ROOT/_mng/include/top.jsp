@@ -62,6 +62,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
 
   <style>
+    .costom-box > div {display: inline-block; vertical-align: top;}
+    .costom-box > div:nth-child(1) {position:relative; margin-right: 30px;}
+    .costom-box > div:nth-child(1):after {content: "~"; position: absolute; top: 5px; right:-19px;}
+
     .content .cus-half {display: flex;justify-content: space-around;}
     .content .cus-half > div {width: 49%;}
     /*.cus-height {height: 875px;}*/

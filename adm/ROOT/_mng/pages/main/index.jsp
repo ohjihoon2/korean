@@ -14,7 +14,6 @@
 <%@ include file="/_common/function.jsp" %>
 <%@ include file="../../include/top.jsp" %>
 <!-- Your Page Content Here -->
-<script src="/_js/common.js"></script>
 
 <script>
 	function GoStatistics(stat) {
@@ -321,26 +320,18 @@
 		//DateTime picker
 		$('#start').datetimepicker({
 			format: "YYYY-MM-DD",
+			maxDate: $("#end").val(),
+		}).on('dp.change', function(e) {
+			$('#end').data('DateTimePicker').minDate(e.date);
 		});
+
 		$('#end').datetimepicker({
 			format: "YYYY-MM-DD",
+			minDate: $("#start").val(),
+			maxDate: new Date()
+		}).on('dp.change', function(e) {
+			$('#start').data('DateTimePicker').maxDate(e.date);
 		});
-
-		//CKEDITOR
-		CKEDITOR.replace('contents',{
-			width:"100%",
-			height:"400px",
-			"filebrowserUploadUrl":"/_mng/plugins/ckeditor/upload.jsp",
-			allowedContent:true
-		});
-
-
-
-		//Categroy Load
-		<% if( IsValid(data.get("category_parent_idx")) ) { %>
-		$('#category1').val('<%=data.get("category_parent_idx")%>');
-		onCate1Change('<%=data.get("category_parent_idx")%>', '<%=data.get("category_idx")%>');
-		<% } %>
 	});
 
 </script>

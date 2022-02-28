@@ -42,6 +42,7 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/popup.js"></script>
 		<% if (request.getParameter("part").equals("main")) { %>
 		<script type="text/javascript" src="js/main.js"></script>
 		<script type="text/javascript" src="js/slick.min.js"></script>
@@ -159,7 +160,7 @@
 					</li>
 				</ul>
 				<ul class="head_btn mt20">
-					<li><a href="#">소식지 신청하기</a></li>
+					<li><a id="popupOpen">소식지 신청하기</a></li>
 					<li><a href="#">이전 소식지 보기</a></li>
 				</ul>
 			</div>
@@ -167,3 +168,68 @@
 		<img src="images/bg_main2.png" alt="moon">
 		<p class="scroll_down"><span>아래로 내려주세요.</span><img src="images/ico_scroll_w.png" alt="아래로 내리시오"></p>
 	</header>
+
+	<!-- 소식지팝업 -->
+	<div id="popupBack" class="popup_back" style="display: none;"></div>
+	<div id="newslettersPoppup" class="newsletters_poppup" style="display: none;">
+		<div>
+			<ul class="popup_tabmenu">
+				<li id="popup1" class="current"><a>수신 신청</a></li>
+				<li id="popup2"><a>수신 거부</a></li>
+			</ul>
+			<div class="popup_tabcont_wrap">
+				<!-- 수신 신청 -->
+				<div id="newsletter_tab01" class="popup_tab_content">
+					<form name="reception5_1" method="POST">
+						<input type="hidden" name="gbn" value="5-1" />
+						<input type="hidden" name="receipt_gbn" value="Y" />
+						<div class="popup_section">
+							<div class="popup_tit"><span class="bold">쉼표, 마침표.</span> 수신 신청</div>
+							<div class="popup_form_layout">
+								<div class="half">
+									<label for="">이름</label>
+									<input type="text" name="name" placeholder="이름을 입력해 주세요" />
+								</div>
+								<div class="half">
+									<label for="">전자우편</label>
+									<input type="text" name="email" placeholder="전자 우편 주소를 입력해 주세요" />
+								</div>
+							</div>
+							<p><label for="">국립국어원 온라인 소식지 ≪쉼표, 마침표.≫ 수신을 신청합니다.</label>  <input type="checkbox" name="check1" value="Y" /></p>
+							<p><label for="">온라인 소식지 외에 국어(원) 관련 소식 수신을 신청합니다.</label>  <input type="checkbox" name="check2" value="Y" /></p>
+							<div class="popup_btns">
+								<a href="javascript:submitReception5_1();" class="black"><i class="fa fa-check" aria-hidden="true"></i> <span>신청</span></a>
+								<a href="javascript:hideReception();" class="white">취소</a>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- 수신 거부 -->
+				<div id="newsletter_tab02" class="popup_tab_content" style="display:none;">
+					<form name="reception5_2" method="POST">
+						<input type="hidden" name="gbn" value="5-2" />
+						<input type="hidden" name="receipt_gbn" value="N" />
+						<div class="popup_section">
+							<div class="popup_tit"><span class="bold">쉼표, 마침표.</span> 수신 거부 신청</div>
+							<div class="popup_form_layout">
+								<div class="half">
+									<label for="">이름</label>
+									<input type="text" name="name" placeholder="이름을 입력해 주세요" />
+								</div>
+								<div class="half">
+									<label for="">전자우편</label>
+									<input type="text" name="email" placeholder="전자 우편 주소를 입력해 주세요" />
+								</div>
+							</div>
+							<p><label for="">국립국어원 온라인 소식지 ≪쉼표, 마침표.≫ 수신을 거부합니다.</label> <input type="checkbox" name="check1" value="Y" /></p>
+							<p><label for="">온라인 소식지 외에 국어(원) 관련 소식 수신을 거부합니다.</label> <input type="checkbox" name="check2" value="Y" /></p>
+							<div class="popup_btns">
+								<a href="javascript:submitReception5_2();" class="black"><i class="fa fa-check" aria-hidden="true"></i> <span>확인</span></a>
+								<a href="javascript:hideReception();" class="white">취소</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>

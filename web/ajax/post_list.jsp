@@ -16,7 +16,7 @@
 	if( !"popular".equals(listType) && !"recently".equals(listType)) { listType="recently"; }
 	
 	String searchTxt = request.getParameter("searchTxt");
-	
+
 	String yyyy = request.getParameter("yyyy");
 	String mm = request.getParameter("mm");
 	try{ yyyy = ""+Integer.parseInt(yyyy); } catch (NumberFormatException ex){ yyyy=""; }
@@ -31,11 +31,15 @@
 		param.put("category", category);
 		param.put("cate1", category);
 	}
-	
+	else if(category == 0) {
+		param.put("category", category);
+		param.put("cate1", category);
+	}
+
 	if (listType != null ) {
 		param.put("listType", listType);
 	}
-	
+
 	if (searchTxt != null ) {
 		searchTxt = searchTxt.replaceAll("&", "&amp;");
 		searchTxt = searchTxt.replaceAll("#", "&#35;");
@@ -72,21 +76,21 @@
 
 		param.put("searchTxt", searchTxt);
 	}
-	
+
 	if (yyyy != null || !"".equals(""+yyyy)) {
 		param.put("yyyy", yyyy);
 	}
-	
+
 	if (mm != null || !"".equals(""+mm)) {
 		param.put("mm", mm);
 	}
-	
+
 	param.put("pageSize", pageSize);
 	param.put("limitOffset", limitOffset);
-	
+
 	List<NewsView> postList = NewsViewDAO.getDAO().postList(param);
 
-	
+
 %>
 <% for (NewsView post : postList) {
 	String thumnail = post.getDefaultThumbnailFile();
@@ -108,9 +112,15 @@
 
 <% } %>
 <% if (limitOffset == 0 && postList.size() == 0) {  %>
-<li class="nonData">
-	게시물이 없습니다.
-</li>
+	<% if (searchTxt.equals("")) {  %>
+		<li class="none">
+			등록된 게시물이 없습니다.
+		</li>
+	<% } else { %>
+		<li class="none">
+			검색된 게시물이 없습니다.
+		</li>
+	<% } %>
 <% } %>
 
 <% if (postList.size() < pageSize) {  %>

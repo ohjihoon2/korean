@@ -55,7 +55,7 @@
 			 , a.subtitle
 			 , a.banner_file
 			 , b.name as category
-			 , DATE_FORMAT(a.write_date, '%Y. %m. %d') as write_date
+			 , DATE_FORMAT(a.write_date, '%Y. %c. %e.') as write_date
 	   	  FROM naro_news a
 		 INNER JOIN (
 						SELECT idx

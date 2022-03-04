@@ -74,7 +74,7 @@
 			</li>
 			<% } %>
 		</ul>
-		<div class="add_btn mt100"><a href="/index.jsp?control=page&part=list&category=1">+ 더 보기</a></div>
+		<div class="add_btn mt100"><a href="/index.jsp?control=page&part=list&category=1">+ 더 보기<span class="active_hover"></span></a></div>
 	</div>
 	<% } %>
 
@@ -103,7 +103,7 @@
 			</li>
 			<% } %>
 		</ul>
-		<div class="add_btn"><a href="/index.jsp?control=page&part=list&category=2">+ 더 보기</a></div>
+		<div class="add_btn"><a href="/index.jsp?control=page&part=list&category=2">+ 더 보기<span class="active_hover"></span></a></div>
 	</div>
 
 	<% } %>
@@ -133,7 +133,7 @@
 			</li>
 			<% } %>
 		</ul>
-		<div class="add_btn"><a href="/index.jsp?control=page&part=list&category=3">+ 더 보기</a></div>
+		<div class="add_btn"><a href="/index.jsp?control=page&part=list&category=3">+ 더 보기<span class="active_hover"></span></a></div>
 	</div>
 	<% } %>
 

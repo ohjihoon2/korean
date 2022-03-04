@@ -7,7 +7,6 @@
 <%@page import="kr.urimal365.util.UtilFunction"%>
 <%@page import="kr.urimal365.dto.Rownum"%>
 <%@page import="java.util.List"%>
-<%@page import="java.util.Locale.Category"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="kr.urimal365.dao.NewsViewDAO"%>
 <%@page import="kr.urimal365.dto.NewsView"%>
@@ -180,7 +179,7 @@
 <div class="con_with mt100 clearfix">
 	<div class="con_bg"></div>
 	<h2 class="pt30">함께 보면 좋은 기사</h2>
-	<div class="add_btn"><a href="/index.jsp?control=page&part=replay">+ 더 보기</a></div>
+	<div class="add_btn"><a href="/index.jsp?control=page&part=replay">+ 더 보기<span class="active_hover"></span></a></div>
 	<ul class="con_flex mt20">
 		<%
 			List<NewsView> recentNewsList = NewsViewDAO.getDAO().recentNewsList(news.getCate1());
@@ -257,106 +256,106 @@
 	})
 //]]>
 </script>
-<div class="eventPopupWrap" id="eventPop">
-		<p class="title"><img src="img/main/eventPopupWrapTitle.png" alt="이벤트 신청"/></p>
-		<div class="epw">
-			<p class="tit"><strong>이벤트</strong>신청하기</p>
-			<div class="epwForm">
-				<form method="post" id="upload_form" action="" enctype="multipart/form-data">
-				<input type="hidden" id="event_idx" name="idx">
-					<p class="w50">
-						<span>이름</span>
-						<input type="text" class="it " title="" value="" name="name"/>
-					</p>
-					<p class="w50">
-						<span>휴대폰번호</span>
-						<input type="text" class="it " title="" value="" name="phone" placeholder="ex)010-1234-1234"/>
-					</p>
-					<p class="w100p">
-						<span>이벤트<br/>정답</span>
-						<textarea name="comment" cols="" rows="" title=""></textarea>
-					</p>
-					<p class="file">
-						<span>파일첨부</span>
-						<input type="text" class="it" readonly="readonly" title="" value="" id="file_name"/>
-						<input type="file" id="upload_file" accept="image/*" name="upload_file" multiple style="display:none"/>
-						<button type="button" onclick="javascript:upload_btn();">찾아보기</button>
-					</p>
-					<p class="buttonArea">
-						<button type="button" onclick="javascript:event_submit();"><img src="img/main/bt_ok.png" alt=""/></button>
-						<a href="javascript:event_close();"><img src="img/main/bt_cancel.png" alt=""/></a>
-					</p>
-				</form>
-			</div>
-			<div class="epwTxt">
-				<p class="tit">[개인정보 보호를 위한 동의]</p>
-				<p class="txt">
-					<span><strong>1) 수집목적 : </strong>상기 이벤트는 국민들의 통일에 대한 관심을 높이기 위해 실시되고 있습니다. 이에 이벤트 참여를 통해 통일에 대해 생각해보는 계기를 만들고, 이벤트 참가자분들이 웹진을 계속 구독할 수 있도록 하고자 합니다.</span>
-					<span><strong>2) 수집항목 : </strong>닉네임, 비밀번호, 이메일, 휴대폰번호, 댓글, 비밀댓글 여부, 정보수집동의 여부, 웹진수신동의(구독자 확대를 위해 실시하는 이벤트이므로 개인정보수집 동의시 웹진 수신을 동의한 것으로 간주합니다.)</span>
-					<span><strong>3) 이용 : </strong>이벤트 당첨시 경품 발송, 당선작 발표, 웹진 발송</span>
-					<span><strong>4) 보유기간 : </strong>경품 수령 확인시까지(1개월), 단 웹진 구독용 정보는 &lt;해지&gt;시까지 이메일만 보유</span>
-					<span><strong>5) 정보보호 책임자 : </strong>이벤트 대행사 (주)인포아트 서지민(02-2269-5029)</span>
-				</p>
-			</div>
-		</div>
-	</div>
-<script src="/js/jquery.form.js"></script>
-<script>
-$("#upload_file").change(
-	    function(){
-	     val = $(this).val().split("\\");
-	     f_name = val[val.length-1]; //마지막 화일명
-	     s_name = f_name.substring(f_name.length-4, f_name.length);//확장자빼오기
+<%--<div class="eventPopupWrap" id="eventPop">--%>
+<%--	<p class="title"><img src="img/main/eventPopupWrapTitle.png" alt="이벤트 신청"/></p>--%>
+<%--	<div class="epw">--%>
+<%--		<p class="tit"><strong>이벤트</strong>신청하기</p>--%>
+<%--		<div class="epwForm">--%>
+<%--			<form method="post" id="upload_form" action="" enctype="multipart/form-data">--%>
+<%--			<input type="hidden" id="event_idx" name="idx">--%>
+<%--				<p class="w50">--%>
+<%--					<span>이름</span>--%>
+<%--					<input type="text" class="it " title="" value="" name="name"/>--%>
+<%--				</p>--%>
+<%--				<p class="w50">--%>
+<%--					<span>휴대폰번호</span>--%>
+<%--					<input type="text" class="it " title="" value="" name="phone" placeholder="ex)010-1234-1234"/>--%>
+<%--				</p>--%>
+<%--				<p class="w100p">--%>
+<%--					<span>이벤트<br/>정답</span>--%>
+<%--					<textarea name="comment" cols="" rows="" title=""></textarea>--%>
+<%--				</p>--%>
+<%--				<p class="file">--%>
+<%--					<span>파일첨부</span>--%>
+<%--					<input type="text" class="it" readonly="readonly" title="" value="" id="file_name"/>--%>
+<%--					<input type="file" id="upload_file" accept="image/*" name="upload_file" multiple style="display:none"/>--%>
+<%--					<button type="button" onclick="javascript:upload_btn();">찾아보기</button>--%>
+<%--				</p>--%>
+<%--				<p class="buttonArea">--%>
+<%--					<button type="button" onclick="javascript:event_submit();"><img src="img/main/bt_ok.png" alt=""/></button>--%>
+<%--					<a href="javascript:event_close();"><img src="img/main/bt_cancel.png" alt=""/></a>--%>
+<%--				</p>--%>
+<%--			</form>--%>
+<%--		</div>--%>
+<%--		<div class="epwTxt">--%>
+<%--			<p class="tit">[개인정보 보호를 위한 동의]</p>--%>
+<%--			<p class="txt">--%>
+<%--				<span><strong>1) 수집목적 : </strong>상기 이벤트는 국민들의 통일에 대한 관심을 높이기 위해 실시되고 있습니다. 이에 이벤트 참여를 통해 통일에 대해 생각해보는 계기를 만들고, 이벤트 참가자분들이 웹진을 계속 구독할 수 있도록 하고자 합니다.</span>--%>
+<%--				<span><strong>2) 수집항목 : </strong>닉네임, 비밀번호, 이메일, 휴대폰번호, 댓글, 비밀댓글 여부, 정보수집동의 여부, 웹진수신동의(구독자 확대를 위해 실시하는 이벤트이므로 개인정보수집 동의시 웹진 수신을 동의한 것으로 간주합니다.)</span>--%>
+<%--				<span><strong>3) 이용 : </strong>이벤트 당첨시 경품 발송, 당선작 발표, 웹진 발송</span>--%>
+<%--				<span><strong>4) 보유기간 : </strong>경품 수령 확인시까지(1개월), 단 웹진 구독용 정보는 &lt;해지&gt;시까지 이메일만 보유</span>--%>
+<%--				<span><strong>5) 정보보호 책임자 : </strong>이벤트 대행사 (주)인포아트 서지민(02-2269-5029)</span>--%>
+<%--			</p>--%>
+<%--		</div>--%>
+<%--	</div>--%>
+<%--</div>--%>
+<%--<script src="/js/jquery.form.js"></script>--%>
+<%--<script>--%>
+<%--$("#upload_file").change(--%>
+<%--	    function(){--%>
+<%--	     val = $(this).val().split("\\");--%>
+<%--	     f_name = val[val.length-1]; //마지막 화일명--%>
+<%--	     s_name = f_name.substring(f_name.length-4, f_name.length);//확장자빼오기--%>
 
-	     if(s_name.toLowerCase() == '.jpg' || s_name.toLowerCase() == '.png' || s_name.toLowerCase() == '.gif'){//허용 확장자 비교
-	      $("#file_name").val(f_name);
-	     }else{
-	      alert("jpg,png,gif 파일만 선택해 주세요.");
-	      return false;
-	     }
-	  	});
+<%--	     if(s_name.toLowerCase() == '.jpg' || s_name.toLowerCase() == '.png' || s_name.toLowerCase() == '.gif'){//허용 확장자 비교--%>
+<%--	      $("#file_name").val(f_name);--%>
+<%--	     }else{--%>
+<%--	      alert("jpg,png,gif 파일만 선택해 주세요.");--%>
+<%--	      return false;--%>
+<%--	     }--%>
+<%--	  	});--%>
 
-function event_view(idx) {
-	var event_idx = document.getElementById("event_idx");
-	event_idx.value=idx;
-	var event_pop = document.getElementById("eventPop");
-	event_pop.style.display="block";
-}
+<%--function event_view(idx) {--%>
+<%--	var event_idx = document.getElementById("event_idx");--%>
+<%--	event_idx.value=idx;--%>
+<%--	var event_pop = document.getElementById("eventPop");--%>
+<%--	event_pop.style.display="block";--%>
+<%--}--%>
 
-function event_close() {
-	var event_pop = document.getElementById("eventPop");
-	event_pop.style.display="none";
-	document.getElementsByName("name")[0].value="";
-	document.getElementsByName("phone")[0].value="";
-	document.getElementsByName("comment")[0].value="";
-	document.getElementById("file_name").value="";
-}
+<%--function event_close() {--%>
+<%--	var event_pop = document.getElementById("eventPop");--%>
+<%--	event_pop.style.display="none";--%>
+<%--	document.getElementsByName("name")[0].value="";--%>
+<%--	document.getElementsByName("phone")[0].value="";--%>
+<%--	document.getElementsByName("comment")[0].value="";--%>
+<%--	document.getElementById("file_name").value="";--%>
+<%--}--%>
 
-function upload_btn() {
-	var file = document.getElementById("upload_file");
-	file.click();
-}
+<%--function upload_btn() {--%>
+<%--	var file = document.getElementById("upload_file");--%>
+<%--	file.click();--%>
+<%--}--%>
 
-function event_submit() {
-	var name = document.getElementsByName("name")[0].value;
-	if (name==null || name==""){
-		alert("이름을 입력해 주세요.");
-		return false;
-	}
-	var phone = document.getElementsByName("phone")[0].value;
-	if (phone==null || phone==""){
-		alert("휴대폰번호를 입력해 주세요.");
-		return false;
-	}
-	var comment = document.getElementsByName("comment")[0].value;
-	if (comment==null || comment==""){
-		alert("정답을 입력해 주세요.");
-		return false;
-	}
-	
-	if(confirm("이벤트에 응모 하시겠습니까?")) {
-		$("#upload_form").attr("action","/page/event/eventAction.jsp");
-		$("#upload_form").submit();
-	}
-}
-</script>
+<%--function event_submit() {--%>
+<%--	var name = document.getElementsByName("name")[0].value;--%>
+<%--	if (name==null || name==""){--%>
+<%--		alert("이름을 입력해 주세요.");--%>
+<%--		return false;--%>
+<%--	}--%>
+<%--	var phone = document.getElementsByName("phone")[0].value;--%>
+<%--	if (phone==null || phone==""){--%>
+<%--		alert("휴대폰번호를 입력해 주세요.");--%>
+<%--		return false;--%>
+<%--	}--%>
+<%--	var comment = document.getElementsByName("comment")[0].value;--%>
+<%--	if (comment==null || comment==""){--%>
+<%--		alert("정답을 입력해 주세요.");--%>
+<%--		return false;--%>
+<%--	}--%>
+<%--	--%>
+<%--	if(confirm("이벤트에 응모 하시겠습니까?")) {--%>
+<%--		$("#upload_form").attr("action","/page/event/eventAction.jsp");--%>
+<%--		$("#upload_form").submit();--%>
+<%--	}--%>
+<%--}--%>
+<%--</script>--%>

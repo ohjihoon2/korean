@@ -11,10 +11,16 @@
 	try{ category = Integer.parseInt(request.getParameter("category")); } catch( NumberFormatException ex ) {}
 	
 	Calendar currentCalendar = Calendar.getInstance();
+	String yyyy = request.getParameter("yyyy");
+	String mm = request.getParameter("mm");
+	
+	if (yyyy == null) {
+		yyyy = "";
+	}
 
-	String yyyy = (request.getParameter("yyyy") == null) ? "" : request.getParameter("yyyy") ;
-	String mm = (request.getParameter("mm") == null) ? "" : request.getParameter("mm") ;
-
+	if (mm == null) {
+		mm = "";
+	}
 %>
 <form name="aform">
 	<input type="hidden" name="control" value="page">
@@ -27,17 +33,17 @@
 	<div class="prev_category mt60 mb10">
 		<select name="category" id="list_theme">
 			<option value="0">전체</option>
-				<% List<NewsCategory> newsCategoryList = NewsCategoryDAO.getDAO().newsCategoryLvl2();
-					for (NewsCategory newsCategory : newsCategoryList) {
-				%>
-				<option value="<%=newsCategory.getIdx()%>" <%=category==newsCategory.getIdx()?"selected":"" %>><%=newsCategory.getName() %></option>
-				<%	} %>
+<%--				<% List<NewsCategory> newsCategoryList = NewsCategoryDAO.getDAO().newsCategoryLvl2();--%>
+<%--					for (NewsCategory newsCategory : newsCategoryList) {--%>
+<%--				%>--%>
+<%--				<option value="<%=newsCategory.getIdx()%>" <%=category==newsCategory.getIdx()?"selected":"" %>><%=newsCategory.getName() %></option>--%>
+<%--				<%	} %>--%>
 		</select>
 		<select name="yyyy" id="list_year">
 			<option value="_">연도</option>
-			<%	for (int y=currentCalendar.get(Calendar.YEAR); y>=2013; y--) {	%>
-				<option value="<%=y%>" <%=(""+y).equals(yyyy)?"selected":"" %>><%=y %></option>
-			<%	} %>
+<%--			<%	for (int y=currentCalendar.get(Calendar.YEAR); y>=2013; y--) {	%>--%>
+<%--				<option value="<%=y%>" <%=(""+y).equals(yyyy)?"selected":"" %>><%=y %></option>--%>
+<%--			<%	} %>--%>
 		</select>
 		<select name="mm" id="lisr_month">
 			<option value="_">월별</option>
@@ -85,7 +91,6 @@
 <script type="text/javascript">
 var list_page=1;
 var is_loadlist = false;
-
 function loadList() {
 	var cate = document.aform.category.value;
 	var yyyy = document.aform.yyyy.value;
@@ -98,8 +103,8 @@ function loadList() {
 
 	var url = "ajax/post_list.jsp?category="+cate+"&page="+list_page;
 
-	$.get( url, function(data) {
-		$("#post_list").append(data);
+	$.get( url, function(data) {			 			
+		$("#post_list").append(data);			 
 		list_page++;
 		is_loadlist = false;
 	}).fail(function() {

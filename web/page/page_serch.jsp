@@ -48,7 +48,7 @@
 
 <!-- --타이틀-- -->
 <h2 class="pt70">
-	<span class="bold">'<%=searchTxt %> 검색결과'</span> 입니다.
+	<span class="bold">'<%=searchTxt %>' 검색결과</span> 입니다.
 </h2>
 
 <!-- --리스트-- -->

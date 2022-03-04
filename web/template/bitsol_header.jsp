@@ -63,12 +63,18 @@
 		</script>
 	</head>
 <body>
-<div id="modal"></div>
 <div id="wrap">
 	<!-- -------header------- -->
 	<header>
-		<div>
+		<div class="header_wrap">
 			<div>
+				<% Date nowDate = new Date();
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy. M.");
+					//원하는 데이터 포맷 지정 String
+					String strNowDate = simpleDateFormat.format(nowDate);
+				%>
+				<!-- --연도-- -->
+				<p id="month" class="mb5"><%= strNowDate %></p>
 				<!-- --logo-- -->
 				<h1 class="clearfix">
 					<div class="icon_menu"></div>
@@ -79,17 +85,9 @@
 					<div class="icon_search"></div>
 				</h1>
 
-				<% Date nowDate = new Date();
-				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM");
-				//원하는 데이터 포맷 지정 String
-				String strNowDate = simpleDateFormat.format(nowDate);
-				%>
-
-				<!-- --연도-- -->
-				<p id="month" class="mt25"><%= strNowDate %></p>
 				<!-- --search-- -->
 				<form method="get" action="index.jsp">
-					<div class="search mt10">
+					<div class="search mt50">
 						<input type="hidden" name="control" value="page">
 						<input type="hidden" name="part" value="serch">
 						<input type="text" class="search_term" title="" value="" name="searchTxt" placeholder="검색어를 입력하세요" />
@@ -103,20 +101,21 @@
 				<nav class="mt20">
 					<ul>
 				<% for(int i = 0; i < category.size(); i++) { %>
-						<li>
-							<a href="<%=category.get(i).getLink() %>">
-					<% String str = category.get(i).getName();
-			   	       String res[] = str.split(" ");
-				    for(int j = 0; j < res.length; j++) {
-						if(j == 1) { %>
+					<li>
+						<a href="<%=category.get(i).getLink() %>">
+						<% String str = category.get(i).getName();
+						   String res[] = str.split(" ");
+						for(int j = 0; j < res.length; j++) {
+							if(j == 1) { %>
 								<span class="bold"><%=res[j] %></span>
-						<% }
-						else { %>
-							<%= res[j] %>
+								<span class="active_hover"></span>
+							<% }
+							else { %>
+								<%= res[j] %>
+							<% } %>
 						<% } %>
-					<% } %>
-							</a>
-						</li>
+						</a>
+					</li>
 				<% } %>
 					</ul>
 				</nav>
@@ -145,28 +144,14 @@
 						</ul>
 					</li>
 					<% } %>
-					<li>
-						<p>한글날 <span class="bold">특별호</span></p>
-						<ul>
-							<li><a href="#">축사</a></li>
-							<li><a href="#">세계 한국어 한마당 안내</a></li>
-							<li><a href="#">전 세계가 인정한 한글</a></li>
-							<li><a href="#">세계로 뻗어 가는 한국어</a></li>
-							<li><a href="#">폴란드의 한국어 열풍</a></li>
-							<li><a href="#">돌민정음으로 바라본 한류</a></li>
-							<li><a href="#">한글을 사랑한 헐버트</a></li>
-							<li><a href="#">한글날맞이 참여 행사</a></li>
-						</ul>
-					</li>
 				</ul>
 				<ul class="head_btn mt20">
 					<li><a id="popupOpen">소식지 신청하기</a></li>
-					<li><a href="#">이전 소식지 보기</a></li>
+					<li><a href="/index.jsp?control=page&part=replay">이전 소식지 보기</a></li>
 				</ul>
 			</div>
 		</div>
-		<img src="images/bg_main2.png" alt="moon">
-		<p class="scroll_down"><span>아래로 내려주세요.</span><img src="images/ico_scroll_w.png" alt="아래로 내리시오"></p>
+		<div class="bg_main"></div>
 	</header>
 
 	<!-- 소식지팝업 -->

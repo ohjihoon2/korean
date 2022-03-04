@@ -53,7 +53,7 @@
 	<ul id="post_list" class="list_con con_flex">
 
 	</ul>
-	<div id="btn_post_more" class="add_btn mt70"><p onclick="loadList();">+ 더보기</p></div>
+	<div id="btn_post_more" class="add_btn mt70" onclick="loadList();">+ 더 보기 <span class="active_hover"></span></div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>

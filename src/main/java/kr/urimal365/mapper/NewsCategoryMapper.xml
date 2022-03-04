@@ -16,7 +16,14 @@
 	</select>
 	
 	<select id="newsCategoryLvl2" resultType="NewsCategory">
-		SELECT idx, name FROM NARO_NEWS_CATEGORY WHERE del_yn='N' AND ifnull(link,'')='' AND lvl=2 ORDER BY name;
+		SELECT a.idx
+			 , a.name
+		  FROM naro_news_category a
+		 WHERE a.idx IN(SELECT b.category_idx
+						  FROM naro_news b
+		 				 WHERE b.open_yn = 'Y'
+						   AND b.del_yn = 'N'
+		 				 GROUP BY b.category_idx)
 	</select>
 	<select id="getCategory" parameterType="int" resultType="NewsCategory">
 		SELECT (CASE WHEN lvl=1 THEN idx ELSE parent_idx END) as idx, name FROM NARO_NEWS_CATEGORY WHERE idx=( SELECT category_idx FROM NARO_NEWS WHERE idx=#{newsIdx} );

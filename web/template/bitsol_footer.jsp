@@ -7,7 +7,7 @@
 	<!-- --link-- -->
 
 	<div id="link_site" class="mt150 clearfix">
-		<ul class="con_flex">
+		<ul>
 			<li><a href="https://stdict.korean.go.kr/main/main.do" target="_blank"><img src="images/link_site1.png" alt="표준국어대사전 로고"></a></li>
 			<li><a href="https://www.korean.go.kr/front/onlineQna/onlineQnaList.do?mn_id=216" target="_blank">온라인 가나다</a></li>
 			<li><a href="https://edu.korean.go.kr/user/index.html" target="_blank"><img src="images/link_site2.png" alt="국어문화학교 로고"></a></li>

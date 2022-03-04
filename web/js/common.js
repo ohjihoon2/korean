@@ -29,6 +29,7 @@ $(document).ready(function() {
 	);
 
 	// --모바일 모달--
+
 	$('#modal').click(function(){
 		$('h1').removeClass('menu_x');
 		$('h1').removeClass('search_x');
@@ -37,27 +38,47 @@ $(document).ready(function() {
 		$('#modal').removeClass('on');
 	});
 
-	// --모바일 lnb--
-	$('.icon_menu').click(function(){
-		$('h1').toggleClass('menu_x');
-		$('h1').removeClass('search_x');
-		$('#mobile_gnb').toggleClass('on');
-		$('#modal').addClass('on');
-		$('.search').removeClass('on');
-	});
-
-	$('#mobile_gnb > li').click(function(){
-		$('#mobile_gnb>li>ul').slideUp(250);
+	// 모바일 lnb 효과
+	$('#mobile_gnb>li').click(function(){
+		$(this).siblings().children('ul').slideUp(250);
 		$(this).children('ul').slideToggle(250);
 	});
 
-	// --모바일 search--
+	// --모바일 lnb btn--
+
+	$('.icon_menu').click(function(){
+		if($('h1').hasClass('menu_x')){
+			$('h1').removeClass('menu_x');
+			$('h1').removeClass('search_x');
+			$('#mobile_gnb').removeClass('on');
+			$('.search').removeClass('on');
+			$('#modal').removeClass('on');
+		}else{
+			$('h1').toggleClass('menu_x');
+			$('h1').removeClass('search_x');
+			$('#mobile_gnb').toggleClass('on');
+			$('#modal').addClass('on');
+			$('.search').removeClass('on');
+		}
+	});
+
+	// --모바일 search btn--
+
 	$('.icon_search').click(function(){
-		$('h1').toggleClass('search_x');
-		$('h1').removeClass('menu_x');
-		$('.search').toggleClass('on');
-		$('#modal').addClass('on');
-		$('#mobile_gnb').removeClass('on');
+		if($('h1').hasClass('search_x')){
+			$('h1').removeClass('menu_x');
+			$('h1').removeClass('search_x');
+			$('#mobile_gnb').removeClass('on');
+			$('.search').removeClass('on');
+			$('#modal').removeClass('on');
+		}else{
+			$('h1').toggleClass('search_x');
+			$('h1').removeClass('menu_x');
+			$('.search').toggleClass('on');
+			$('#modal').addClass('on');
+			$('#mobile_gnb').removeClass('on');
+
+		}
 	});
 });
 

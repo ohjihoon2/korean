@@ -3,7 +3,7 @@
 
 <mapper namespace="kr.urimal365.dao.VisitMapper">
 	<insert id="setTotalCount" parameterType="Visit">
-		INSERT INTO naro_log_connect_user
+		INSERT INTO NARO_LOG_CONNECT_USER
 		(connect_agent, connect_os, connect_browser, connect_ip, connect_route, connect_date)
 		VALUES(#{connectAgent}, #{connectOs}, #{connectBrowser}, #{connectIp}, #{connectRoute}, sysdate());
 

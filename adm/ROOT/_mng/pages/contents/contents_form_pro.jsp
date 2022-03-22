@@ -56,7 +56,7 @@
 			//}		
 		//////////////////////////////////// 삭제 ///////////////////////////////////////
 		} else if( "modify".equals(cmd) ) {
-			String sql = "UPDATE naro_contents SET gbn=?, contents=?, open_yn=?, open_start_datetime=?, open_end_datetime=?, update_id=?, update_date=now() WHERE idx=?";
+			String sql = "UPDATE NARO_CONTENTS SET gbn=?, contents=?, open_yn=?, open_start_datetime=?, open_end_datetime=?, update_id=?, update_date=now() WHERE idx=?";
 			pstmt = con.prepareStatement( sql );
 
 			paramcnt=1;

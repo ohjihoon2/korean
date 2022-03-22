@@ -25,12 +25,12 @@
 			 , a.title
 			 , a.thumbnail_file
 			 , b.name as category
-		FROM naro_news a
+		FROM NARO_NEWS a
 				 INNER JOIN (SELECT idx
 								  , name
-							 FROM naro_news_category
+							 FROM NARO_NEWS_CATEGORY
 							 WHERE parent_idx IN (SELECT idx
-												  FROM naro_news_category
+												  FROM NARO_NEWS_CATEGORY
 												  WHERE is_open ='Y'
 													AND del_yn ='N'
 													AND lvl = 1
@@ -45,7 +45,7 @@
 
 	<select id="getCategoryInfo" resultType="HashMap" parameterType="int">
 		SELECT name, is_open
-		  FROM naro_news_category
+		  FROM NARO_NEWS_CATEGORY
 		 WHERE idx = #{idx}
 	</select>
 
@@ -56,11 +56,11 @@
 			 , a.banner_file
 			 , b.name as category
 			 , DATE_FORMAT(a.write_date, '%Y. %c. %e.') as write_date
-	   	  FROM naro_news a
+	   	  FROM NARO_NEWS a
 		 INNER JOIN (
 						SELECT idx
 						     , name
-						FROM naro_news_category
+						FROM NARO_NEWS_CATEGORY
 						WHERE parent_idx = #{idx}
 						  AND del_yn ='N'
 						  AND is_open = 'Y'

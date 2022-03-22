@@ -113,7 +113,7 @@
 		rs.close();
 		pstmt.close();
 
-		sql = "   SELECT sum(view_count) AS total_view "
+		sql = "   SELECT IFNULL(SUM(view_count),0) AS total_view "
 				+"  FROM NARO_NEWS_VIEW_COUNT"
 				+" WHERE (write_date BETWEEN ? AND ?) ";
 		pstmt = con.prepareStatement( sql );
@@ -129,8 +129,10 @@
 
 		double num = Double.parseDouble(data.get("total_view").toString()) / Double.parseDouble(data.get("total_user").toString());
 		DecimalFormat df = new DecimalFormat("0.00");
-
-		String avg = df.format(num);
+		String avg = "0";
+			if(!Double.isNaN(num)){
+				avg = df.format(num);
+			}
 
 		data.put("avg", avg);
 

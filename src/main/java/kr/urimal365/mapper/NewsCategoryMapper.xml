@@ -18,9 +18,9 @@
 	<select id="newsCategoryLvl2" resultType="NewsCategory">
 		SELECT a.idx
 			 , a.name
-		  FROM naro_news_category a
+		  FROM NARO_NEWS_CATEGORY a
 		 WHERE a.idx IN(SELECT b.category_idx
-						  FROM naro_news b
+						  FROM NARO_NEWS b
 		 				 WHERE b.open_yn = 'Y'
 						   AND b.del_yn = 'N'
 		 				 GROUP BY b.category_idx)
@@ -39,7 +39,7 @@
 
 	<select id="getCategoryGroup" parameterType="int" resultType="Map">
 		SELECT idx, if(lvl = 1, '전체', name) AS name
-		FROM naro_news_category
+		FROM NARO_NEWS_CATEGORY
 		WHERE parent_idx = (
 								SELECT PARENT_IDX
 								  FROM NARO_NEWS_CATEGORY b

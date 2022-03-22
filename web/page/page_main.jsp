@@ -38,9 +38,14 @@
 		<h2>새로운 <span class="bold">글 모음</span></h2>
 		<div class="responsive mt40">
 			<% List<Map<String, Object>> categoryNewList = ContentsDAO.getDAO().getCategoryNewList(); %>
-			<% for(int i= 0; i < categoryNewList.size(); i++) { %>
+			<% for(int i= 0; i < categoryNewList.size(); i++) {
+				String thumnail = (String) categoryNewList.get(i).get("thumbnail_file");
+				if (thumnail == null || thumnail.equals("")) {
+						thumnail = "/img/common/list_thumnail.jpg";
+				}
+			%>
 				<div>
-					<a href="/index.jsp?control=page&part=view&idx=<%= categoryNewList.get(i).get("idx") %>"><img src="<%= categoryNewList.get(i).get("thumbnail_file") %>" alt="책 그림">
+					<a href="/index.jsp?control=page&part=view&idx=<%= categoryNewList.get(i).get("idx") %>"><img src="<%= thumnail %>" alt="책 그림">
 						<ul>
 							<li class="tit_color"><%= categoryNewList.get(i).get("category") %></li>
 							<li class="tit_bold"><%= categoryNewList.get(i).get("title") %></li>
@@ -119,7 +124,7 @@
 		<ul class="con_flex mt40">
 			<% for(int i= 0; i < contentList3.size(); i++) { %>
 			<li>
-				<a href="#">
+				<a href="/index.jsp?control=page&part=view&idx=<%= contentList3.get(i).get("idx") %>">
 					<img src="<%= contentList3.get(i).get("banner_file") %>" alt="">
 					<ul>
 						<li class="tit_color"><%= contentList3.get(i).get("category") %></li>
@@ -141,10 +146,9 @@
 
 	<!-- --이벤트 배너-- -->
 
-	<% Contents getSelectOneBanner = (Contents) ContentsDAO.getDAO().getSelectOneBanner("3-3"); %>
+	<% Contents bottomBanner = ContentsDAO.getDAO().getSelectOneBanner("3-3"); %>
 	<div class="brn_event mt100 clearfix">
-		<ul>
-			<li><a href="#"><img src="images/bnr_img1.png" alt="우리말 풀기 그림"></a></li>
-			<li><a href="#"><img src="images/bnr_img2.png" alt="575돌 한글날 이벤트 당첨자 발표 그림"></a></li>
-		</ul>
+		<% if(bottomBanner != null) { %>
+			<%=bottomBanner.getContents() %>
+		<% } %>
 	</div>

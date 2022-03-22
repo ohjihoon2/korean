@@ -11,7 +11,7 @@
         <li <% if( menu_id.equals("6-1") ) { %>class="active"<% } %>><a href="../media/media_list.jsp"><i class="fa fa-file-image-o"></i> <span>미디어 관리</span></a></li>        
         <li <% if( menu_id.equals("2-1") ) { %>class="active"<% } %>><a href="../news/news_list.jsp"><i class="fa fa-list"></i> <span>게시글 관리</span></a></li>        
         <li  <% if( menu_id.equals("3") ) { %>class="active"<% } %>><!--class="treeview"-->
-          <a href="../contents/contents_list.jsp"><i class="fa fa-link"></i> <span>컨텐츠 관리</span> <i class="fa fa-angle-left pull-right"></i></a>   
+          <a href="../contents/contents_list.jsp"><i class="fa fa-link"></i> <span>컨텐츠 관리</span></a>
 		<!--		
           <ul class="treeview-menu">
             <li <% if( menu_id.equals("3-5") ) { %>class="active"<% } %>><a href="../contents/contents_form.jsp?gbn=3-5"><i class="fa fa-circle-o"></i>메인 최상단 팝업 배너</a></li>

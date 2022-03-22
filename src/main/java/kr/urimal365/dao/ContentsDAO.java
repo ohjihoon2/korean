@@ -96,12 +96,6 @@ public class ContentsDAO extends MyBatisConfig {
         } finally {
             sqlSession.close();
         }
-
         return var4;
     }
-
-
-
-
-
 }

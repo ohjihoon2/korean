@@ -68,7 +68,7 @@ function loadList( ) {
 	if( is_loadlist ) return; 
 	is_loadlist = true;
 
-	var url = "ajax/post_list.jsp?category="+cate+"&page="+list_page+"&searchTxt="+encodeURI(search_txt);		
+	var url = "ajax/post_list.jsp?category="+cate+"&page="+list_page+"&isOpen=Y&searchTxt="+encodeURI(search_txt);
 
 	$.get( url, function(data) {			 			
 		$("#post_list").append(data);			 
@@ -79,8 +79,7 @@ function loadList( ) {
 	});
 }
 
-window.onload=function()
-{
+window.onload=function() {
 	loadList();
 }
 </script>

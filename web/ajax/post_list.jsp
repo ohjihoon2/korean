@@ -3,41 +3,41 @@
 <%@page import="kr.urimal365.dto.NewsView"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	int category = 1;
 	int postPage = 1;
-	
+
 	try{ category = Integer.parseInt(request.getParameter("category")); } catch( NumberFormatException ex ) {}
+
+
 	try{ postPage = Integer.parseInt(request.getParameter("page")); if(postPage<1){postPage=1;} } catch( NumberFormatException ex ) {}
-	
+
 	String listType=request.getParameter("listType");
 	if( !"popular".equals(listType) && !"recently".equals(listType)) { listType="recently"; }
-	
+
+	String isOpen = request.getParameter("isOpen");
 	String searchTxt = request.getParameter("searchTxt");
 
 	String yyyy = request.getParameter("yyyy");
 	String mm = request.getParameter("mm");
 	try{ yyyy = ""+Integer.parseInt(yyyy); } catch (NumberFormatException ex){ yyyy=""; }
 	try{ mm = ""+Integer.parseInt(mm); } catch (NumberFormatException ex){ mm=""; }
-	
+
 	int pageSize = 9;
 	int limitOffset = (postPage-1) * pageSize;
-	
+
 	HashMap<String, Object> param = new HashMap<String, Object>();
-	
-	if (category > 0) {
-		param.put("category", category);
-		param.put("cate1", category);
-	}
-	else if(category == 0) {
-		param.put("category", category);
-		param.put("cate1", category);
-	}
+
+	param.put("category", category);
+	param.put("parent", category);
 
 	if (listType != null ) {
 		param.put("listType", listType);
+	}
+
+	if (isOpen != null ) {
+		param.put("isOpen", isOpen);
 	}
 
 	if (searchTxt != null ) {
@@ -88,14 +88,13 @@
 	param.put("pageSize", pageSize);
 	param.put("limitOffset", limitOffset);
 
+
 	List<NewsView> postList = NewsViewDAO.getDAO().postList(param);
-
-
 %>
 <% for (NewsView post : postList) {
-	String thumnail = post.getDefaultThumbnailFile();
+	String thumnail = post.getThumbnailFile();
 	if (thumnail == null || thumnail.equals("")) {
-		thumnail = "/images/common/thumnail_category_old.jpg";
+		thumnail = "/img/common/list_thumnail.jpg";
 	}
 %>
 <li>

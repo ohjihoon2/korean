@@ -63,50 +63,56 @@
 	
 	<select id="postList" resultMap="news" parameterType="java.util.HashMap">
 	SELECT a.idx,
-	       a.title,
-	       a.thumbnail_file,
-	       a.read_count,
-	       a.category_name,
-	       a.default_thumbnail_file,
+		   b.name AS category_name,
+		   a.title,
+		   a.thumbnail_file,
 		   DATE_FORMAT(a.write_date, '%Y. %c. %e.') AS write_date
-	  FROM VW_NARO_NEWS a
-	 WHERE OPEN_YN = 'Y'
-	   AND del_yn = 'N'
-	<if test='part == "list" || part == "view"'>
-		AND parent_is_open = 'Y'
-	 	AND is_open = 'Y'
+	  FROM NARO_NEWS a
+	 INNER JOIN NARO_NEWS_CATEGORY b ON a.category_idx = b.idx
+	 INNER JOIN NARO_NEWS_CATEGORY c ON b.parent_idx = c.idx
+	 WHERE a.open_yn = 'Y'
+	   AND a.del_yn = 'N'
+	<if test="isOpen.equals('Y')">
+	   AND b.is_open = 'Y'
+	   AND c.is_open = 'Y'
 	</if>
 	<if test="category > 0">
-		AND ( a.category_idx=#{category} OR a.cate1=#{cate1} )
+	   AND ( a.category_idx=#{category} OR b.parent_idx=#{parent} )
 	</if>
 	<if test="searchTxt!=null">
-		AND a.title LIKE CONCAT('%',#{searchTxt},'%')
+	   AND a.title LIKE CONCAT('%',#{searchTxt},'%')
 	</if>
 	<if test="yyyy!=null and !yyyy.equals('')">
-		AND LEFT(a.publish_date,4)=${yyyy}
+		AND YEAR(a.write_date)=${yyyy}
 	</if>
 	<if test="mm!=null and !mm.equals('')">
-		AND MID(a.publish_date,6,2)=${mm}
+		AND MONTH(a.write_date)=${mm}
 	</if>
 	<choose>
 		<when test="listType.equals('popular')">
 			ORDER BY a.read_count DESC, a.idx DESC
 		</when>
 		<otherwise>
-			ORDER BY a.publish_date DESC, a.idx DESC LIMIT #{limitOffset}, #{pageSize};
+			ORDER BY a.write_Date DESC, a.idx DESC LIMIT #{limitOffset}, #{pageSize};
 		</otherwise>
 	</choose>
 	</select>
 	
 	<select id="getNews" resultMap="news" parameterType="int">
-		SELECT a.*, a.category_name AS cate_name, a.cate1 AS cate1_idx, a.default_banner_file FROM VW_NARO_NEWS a WHERE a.del_yn='N' AND a.idx=#{idx};
+		SELECT a.*
+		     , a.category_name AS cate_name
+		     , a.cate1 AS cate1_idx
+		     , a.default_banner_file
+		  FROM VW_NARO_NEWS a
+		 WHERE a.del_yn='N'
+		   AND a.idx=#{idx};
 	</select>
-	
+
 	<select id="getAdminNews" resultMap="news" parameterType="int">
-		SELECT a.*, b.name AS cate_name, b.parent_idx AS cate1_idx, CASE WHEN IfNull(a.banner_file,'') = '' THEN b.default_banner_file ELSE a.banner_file 
+		SELECT a.*, b.name AS cate_name, b.parent_idx AS cate1_idx, CASE WHEN IfNull(a.banner_file,'') = '' THEN b.default_banner_file ELSE a.banner_file
 			END AS default_banner_file FROM NARO_NEWS a INNER JOIN NARO_NEWS_CATEGORY b ON a.category_idx=b.idx WHERE a.del_yn='N' AND a.idx=#{idx};
 	</select>
-	
+
 	<select id="getRowNum" resultMap="rownumMap" parameterType="java.util.HashMap">
 		SELECT rownum FROM ( SELECT @ROWNUM:=@ROWNUM+1 AS rownum, a.idx FROM VW_NARO_NEWS a 
 			INNER JOIN ( SELECT @ROWNUM:=0 ) AS t2 WHERE a.category_idx=#{categoryIdx} ORDER BY a.publish_date DESC, a.idx DESC ) src WHERE src.idx=#{idx};

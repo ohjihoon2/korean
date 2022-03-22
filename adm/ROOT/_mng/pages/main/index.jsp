@@ -100,7 +100,7 @@
 		Hashtable data = new Hashtable();
 
 		sql = "   SELECT COUNT(*) AS total_user "
-				+"  FROM naro_log_connect_user "
+				+"  FROM NARO_LOG_CONNECT_USER "
 				+" WHERE (connect_date BETWEEN ? AND ?) ";
 		pstmt = con.prepareStatement( sql );
 		pstmt.setString(1, start);
@@ -114,7 +114,7 @@
 		pstmt.close();
 
 		sql = "   SELECT sum(view_count) AS total_view "
-				+"  FROM naro_news_view_count"
+				+"  FROM NARO_NEWS_VIEW_COUNT"
 				+" WHERE (write_date BETWEEN ? AND ?) ";
 		pstmt = con.prepareStatement( sql );
 		pstmt.setString(1, start);

@@ -1,9 +1,10 @@
+<%@ page import="kr.urimal365.dao.ContentsDAO" %>
+<%@ page import="kr.urimal365.dto.Contents" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!-- -------footer------- -->
 
 <footer>
-
 	<!-- --link-- -->
 
 	<div id="link_site" class="mt150 clearfix">
@@ -20,11 +21,10 @@
 	<div id="footer">
 		<p class="foot_logo mt30 mb30"><a href="https://www.korean.go.kr/" target="_blank"><img src="images/foot_logo.png" alt="foot_logo"></a></p>
 		<p class="line_w"></p>
-		<ul class="address mt40">
-			<li>우편번호 07511 서울 강서구 금낭화로 154(방화동 827) / 대표 전화: 02-2669-9775(평일 9~18시)</li>
-			<li>발행인: 국립국어원장 / 기획·편집: 국립국어원 공공언어과 / 제작: (주) 빛솔커뮤니케이션</li>
-			<li>≪쉼표, 마침표.≫의 저작권은 국립국어원에 있습니다.</li>
-		</ul>
+		<% Contents footer = ContentsDAO.getDAO().getSelectOneBanner("3-4"); %>
+		<% if(footer != null) { %>
+		<%=footer.getContents() %>
+		<% } %>
 		<ul class="sns mt30 pb50">
 			<li class="mr10"><a href="https://twitter.com/urimal365" target="_blank"><img src="images/ico_twiter.png" alt="트위터"></a></li>
 			<li class="mr10"><a href="https://www.facebook.com/urimal365k/" target="_blank"><img src="images/ico_facebook.png" alt="페이스북"></a></li>
@@ -36,5 +36,53 @@
 	</div>
 </footer>
 </div>
+
+<% if (request.getParameter("part").equals("main")) {
+	Contents cont = ContentsDAO.getDAO().getSelectOneBanner("3-5");
+
+	Cookie[] ck = request.getCookies();
+	String ckVal = "";
+	if(ck != null){
+		for(int i = 0; i < ck.length; ++i){
+			String key = ck[i].getName();
+			if(key != null || key.trim().equals("popupYN")){
+				ckVal = ck[i].getValue();
+				break;
+			}
+		}
+	}
+
+	if(cont != null && !ckVal.equals('N')) { %>
+		<div id="mainPopup" class="main-popup">
+			<%=cont.getContents() %>
+			<div class="main-popup-foot" >
+				<a href="javascript:closePopupCookie(1)">오늘 하루 팝업 닫기</a>
+				<a href="javascript:closePopup();">닫기</a>
+			</div>
+		</div>
+		<script>
+			function closePopupCookie(day) {
+				setCookie('popupYN', 'N' , day);
+				$('#mainPopup').hide();
+			}
+
+			function closePopup() {
+				$('#mainPopup').hide();
+			}
+
+			function setCookie(name, value, expiredays) {
+				var todayDate = new Date();
+				todayDate = new Date(parseInt(todayDate.getTime() / 86400000) * 86400000 + 54000000);
+				if ( todayDate > new Date() ) {
+					expiredays = expiredays - 1;
+				}
+				todayDate.setDate( todayDate.getDate() + expiredays );
+				document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+			}
+		</script>
+
+	<% }
+} %>
+
 </body>
 </html>

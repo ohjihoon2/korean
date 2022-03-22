@@ -24,7 +24,7 @@
 <%
 	int category = 1;
 	try{ category = Integer.parseInt(request.getParameter("category")); } catch( NumberFormatException ex ){ }
-	
+
 	String categoryTitle = NewsCategoryDAO.getDAO().getCategoryTitle(category).getName();
 
 	categoryTitle = UtilFunction.removeTag(categoryTitle);
@@ -56,19 +56,19 @@
 	<div id="btn_post_more" class="add_btn mt70" onclick="loadList();">+ 더 보기 <span class="active_hover"></span></div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript">
 var list_page=1;
 var is_loadlist = false;
+
 function loadList() {
-	var cate = document.aform.category.value;
 	if(is_loadlist) {
 		return;
 	}
 	is_loadlist = true;
 
-	var url = "ajax/post_list.jsp?category="+cate+"&page="+list_page;
-	
+	var cate = document.aform.category.value;
+	var url = "ajax/post_list.jsp?category="+cate+"&page="+list_page+"&isOpen=Y";
+
 	$.get( url, function(data) {
 		$("#post_list").append(data);
 		list_page++;

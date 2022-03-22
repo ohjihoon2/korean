@@ -28,8 +28,6 @@
 	<div>
 		<a href="/index.jsp?control=page&part=list&category=50">
 			<p>한글날 <span class="bold">특별호</span></p>
-			<img src="images/ico_menu5-1.jpg" alt="우리말 풀기">
-			<img src="images/ico_menu5-2.jpg" alt="세종대왕 그림">
 		</a>
 	</div>
 </div>

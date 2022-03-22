@@ -41,9 +41,9 @@
 	if(statistics.equals("") || statistics.equals("D")) {
 		sql =" 		SELECT a.re "
 				+", CONCAT(a.re ,' (' ,SUBSTR(_UTF8'일월화수목금토', DAYOFWEEK(a.re), 1), ')') AS dt "
-				+", (SELECT COUNT(*) dt_total FROM naro_log_connect_user WHERE date_format(connect_date,'%Y-%m-%d') = a.re) AS total "
-				+", (SELECT COUNT(*) dt_total FROM naro_log_connect_user WHERE date_format(connect_date,'%Y-%m-%d') = a.re AND connect_os in('Windows', 'MAC', 'Etc')) AS pc "
-				+", (SELECT COUNT(*) dt_total FROM naro_log_connect_user WHERE date_format(connect_date,'%Y-%m-%d') = a.re AND connect_os not in('Windows', 'MAC', 'Etc')) AS mobile "
+				+", (SELECT COUNT(*) dt_total FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y-%m-%d') = a.re) AS total "
+				+", (SELECT COUNT(*) dt_total FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y-%m-%d') = a.re AND connect_os in('Windows', 'MAC', 'Etc')) AS pc "
+				+", (SELECT COUNT(*) dt_total FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y-%m-%d') = a.re AND connect_os not in('Windows', 'MAC', 'Etc')) AS mobile "
 				+"	FROM ( "
 				+"	SELECT DATE(NOW()) re "
 				+"	UNION ALL SELECT DATE_ADD(DATE(NOW()), INTERVAL -1 DAY) "
@@ -57,9 +57,9 @@
 	}
 	else if(statistics.equals("M")) {
 		sql =" 		SELECT a.dt "
-				+", (SELECT COUNT(*) dt_total FROM naro_log_connect_user WHERE date_format(connect_date,'%Y-%m') = a.dt) AS total"
-				+", (SELECT COUNT(*) dt_total FROM naro_log_connect_user WHERE date_format(connect_date,'%Y-%m') = a.dt AND connect_os in('Windows', 'MAC', 'Etc')) AS pc"
-				+", (SELECT COUNT(*) dt_total FROM naro_log_connect_user WHERE date_format(connect_date,'%Y-%m') = a.dt AND connect_os not in('Windows', 'MAC', 'Etc')) AS mobile"
+				+", (SELECT COUNT(*) dt_total FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y-%m') = a.dt) AS total"
+				+", (SELECT COUNT(*) dt_total FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y-%m') = a.dt AND connect_os in('Windows', 'MAC', 'Etc')) AS pc"
+				+", (SELECT COUNT(*) dt_total FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y-%m') = a.dt AND connect_os not in('Windows', 'MAC', 'Etc')) AS mobile"
 				+"	FROM ( "
 				+"	SELECT date_format(DATE(NOW()),'%Y-%m') as dt "
 				+"	UNION ALL SELECT date_format(DATE_ADD(DATE(NOW()), INTERVAL -1 MONTH ),'%Y-%m') "
@@ -78,9 +78,9 @@
 	}
 	else if(statistics.equals("Y")) {
 		sql =" 		SELECT a.dt "
-				+", (SELECT COUNT(*) dt_total FROM naro_log_connect_user WHERE date_format(connect_date,'%Y') = a.dt) AS total "
-				+", (SELECT COUNT(*) dt_total FROM naro_log_connect_user WHERE date_format(connect_date,'%Y') = a.dt AND connect_os in('Windows', 'MAC', 'Etc')) AS pc "
-				+", (SELECT COUNT(*) dt_total FROM naro_log_connect_user WHERE date_format(connect_date,'%Y') = a.dt AND connect_os not in('Windows', 'MAC', 'Etc')) AS mobile "
+				+", (SELECT COUNT(*) dt_total FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y') = a.dt) AS total "
+				+", (SELECT COUNT(*) dt_total FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y') = a.dt AND connect_os in('Windows', 'MAC', 'Etc')) AS pc "
+				+", (SELECT COUNT(*) dt_total FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y') = a.dt AND connect_os not in('Windows', 'MAC', 'Etc')) AS mobile "
 				+"	FROM ( "
 				+"	SELECT date_format(DATE(NOW()),'%Y') as dt "
 				+"	UNION ALL SELECT date_format(DATE_ADD(DATE(NOW()), INTERVAL -1 YEAR ),'%Y') "
@@ -148,25 +148,25 @@
 
 <% if(statistics.equals("") || statistics.equals("D")) {
 		sql =" 		SELECT a.ds "
-				+", (SELECT COUNT(*) FROM naro_log_connect_user WHERE connect_browser = a.ds AND date_format(connect_date,'%Y-%m-%d') = DATE(NOW())) AS dn "
+				+", (SELECT COUNT(*) FROM NARO_LOG_CONNECT_USER WHERE connect_browser = a.ds AND date_format(connect_date,'%Y-%m-%d') = DATE(NOW())) AS dn "
 				+"	FROM ( "
-				+"	SELECT connect_browser AS ds FROM naro_log_connect_user WHERE date_format(connect_date,'%Y-%m-%d') = DATE(NOW()) GROUP BY connect_browser "
+				+"	SELECT connect_browser AS ds FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y-%m-%d') = DATE(NOW()) GROUP BY connect_browser "
 				+"	) a"
 				+"	ORDER BY FIELD(a.ds,'Etc'),a.ds ASC";
 	}
 	else if(statistics.equals("M")) {
 		sql =" 		SELECT a.ds "
-				+", (SELECT COUNT(*) FROM naro_log_connect_user WHERE connect_browser = a.ds AND date_format(connect_date,'%Y-%m') = date_format(NOW(),'%Y-%m')) AS dn "
+				+", (SELECT COUNT(*) FROM NARO_LOG_CONNECT_USER WHERE connect_browser = a.ds AND date_format(connect_date,'%Y-%m') = date_format(NOW(),'%Y-%m')) AS dn "
 				+"	FROM ( "
-				+"	SELECT connect_browser AS ds FROM naro_log_connect_user WHERE date_format(connect_date,'%Y-%m') = date_format(NOW(),'%Y-%m') GROUP BY connect_browser "
+				+"	SELECT connect_browser AS ds FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y-%m') = date_format(NOW(),'%Y-%m') GROUP BY connect_browser "
 				+"	) a"
 				+"	ORDER BY FIELD(a.ds,'Etc'),a.ds ASC";
 	}
 	else if(statistics.equals("Y")) {
 		sql =" 		SELECT a.ds "
-				+", (SELECT COUNT(*) FROM naro_log_connect_user WHERE connect_browser = a.ds AND date_format(connect_date,'%Y') = date_format(NOW(),'%Y')) AS dn "
+				+", (SELECT COUNT(*) FROM NARO_LOG_CONNECT_USER WHERE connect_browser = a.ds AND date_format(connect_date,'%Y') = date_format(NOW(),'%Y')) AS dn "
 				+"	FROM ( "
-				+"	SELECT connect_browser AS ds FROM naro_log_connect_user WHERE date_format(connect_date,'%Y') = date_format(NOW(),'%Y') GROUP BY connect_browser "
+				+"	SELECT connect_browser AS ds FROM NARO_LOG_CONNECT_USER WHERE date_format(connect_date,'%Y') = date_format(NOW(),'%Y') GROUP BY connect_browser "
 				+"	) a"
 				+"	ORDER BY FIELD(a.ds,'Etc'),a.ds ASC";
 	}

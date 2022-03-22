@@ -14,8 +14,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>쉼표, 마침표</title>
-		<link rel="shortcut icon" href="/images/common/KR_icon.png" />
-		<link rel="apple-touch-icon" href="/images/common/KR_icon.png" />
+		<link rel="shortcut icon" href="img/common/KR_icon.png" />
+		<link rel="apple-touch-icon" href="img/common/KR_icon.png" />
 		<%
 			List<CssDB> allCssList = CssDAO.getDAO().getCssList("8-1");
 			for (CssDB css:allCssList) {
@@ -41,11 +41,11 @@
 		<% } %>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+		<script type="text/javascript" src="js/slick.min.js"></script>
 		<script type="text/javascript" src="js/common.js"></script>
 		<script type="text/javascript" src="js/popup.js"></script>
 		<% if (request.getParameter("part").equals("main")) { %>
 		<script type="text/javascript" src="js/main.js"></script>
-		<script type="text/javascript" src="js/slick.min.js"></script>
 		<% } else { %>
 		<script type="text/javascript" src="js/sub.js"></script>
 		<% } %>
@@ -90,7 +90,7 @@
 					<div class="search mt50">
 						<input type="hidden" name="control" value="page">
 						<input type="hidden" name="part" value="serch">
-						<input type="text" class="search_term" title="" value="" name="searchTxt" placeholder="검색어를 입력하세요" />
+						<input type="text" class="search_term" title="" value="" name="searchTxt" placeholder="검색어를 입력하세요." />
 						<button type="submit" class="search_btn">
 							<i class="fa fa-search"></i>
 						</button>
@@ -209,7 +209,7 @@
 							<p><label for="">국립국어원 온라인 소식지 ≪쉼표, 마침표.≫ 수신을 거부합니다.</label> <input type="checkbox" name="check1" value="Y" /></p>
 							<p><label for="">온라인 소식지 외에 국어(원) 관련 소식 수신을 거부합니다.</label> <input type="checkbox" name="check2" value="Y" /></p>
 							<div class="popup_btns">
-								<a href="javascript:submitReception5_2();" class="black"><i class="fa fa-check" aria-hidden="true"></i> <span>확인</span></a>
+								<a href="javascript:submitReception5_2();" class="black"><i class="fa fa-check" aria-hidden="true"></i> <span>거부</span></a>
 								<a href="javascript:hideReception();" class="white">취소</a>
 							</div>
 						</div>

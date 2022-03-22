@@ -84,7 +84,7 @@
 				<div class="itBox">
 					<input type="hidden" name="control" value="page">
 					<input type="hidden" name="part" value="serch">
-					<input type="text" class="it" title="" value="" name="searchTxt" placeholder="검색어를 입력하세요" />
+					<input type="text" class="it" title="" value="" name="searchTxt" placeholder="검색어를 입력하세요." />
 					<button class="searchBt">검색</button>
 				</div>
 			</form>
